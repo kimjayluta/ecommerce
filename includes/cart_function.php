@@ -1,15 +1,14 @@
 <?php
 session_start();
 include_once 'db.php';
+// to get ip address
+$ip_add = getenv("REMOTE_ADDR");
+@$uid = $_SESSION['id'];
+$sql = '';
+// add product in to cart
 if (isset($_POST['pID'])){
-    // to get ip address
-    $ip_add = getenv("REMOTE_ADDR");
-    // product
     $pID = $_POST['pID'];
-    $sql = '';
-    $uid = '';
-    if (isset($_SESSION['id'])){
-        $uid = $_SESSION['id'];
+    if (isset($uid)){
         $query = mysqli_query($conn,"SELECT * FROM cart WHERE prod_id = '$pID' AND user_id = '$uid'");
         // If tig add nya na su product
         if (mysqli_num_rows($query) > 0){
@@ -39,4 +38,17 @@ if (isset($_POST['pID'])){
             echo 'error';
         }
     }
+}
+// Counting the product in the cart
+if(isset($_POST['count'])){
+    if (isset($_SESSION['id'])){
+        $sql = "SELECT COUNT(*) AS count_item FROM cart WHERE user_id = $uid";
+    } else {
+        $sql = "SELECT COUNT(*) AS count_item FROM cart WHERE ip_add = '$ip_add' AND user_id < 0";
+    }
+
+    $query = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($query);
+    echo $row['count_item'];
+    exit;
 }

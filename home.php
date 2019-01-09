@@ -105,7 +105,9 @@ $(document).ready( function () {
 
     // Get * product
     getProd();
-
+    // count item in the cart
+    countItem();
+    // add product in cart function
     $('#get_product').on('click', '.pBtn', function () {
        const pID = $(this).data("id");
        $.ajax({
@@ -115,10 +117,22 @@ $(document).ready( function () {
            success: function (data) {
                    $('#msg').html(data);
                    $('.modal').modal('show');
+                   countItem();
                    console.log(data)
            }
        });
     });
+    // Counting the product in the cart
+    function countItem() {
+        $.ajax({
+            url: 'includes/cart_function.php',
+            method: 'post',
+            data: {count:1},
+            success: function (data) {
+                $('.badge').html(data);
+            }
+        })
+    }
     // Get product by selected category
     $('.list').on('click',function () {
         // Get the id of the selected category
@@ -136,7 +150,6 @@ $(document).ready( function () {
             }
         });
     });
-    //
 
     // Function to get * product
     function getProd() {
