@@ -118,7 +118,6 @@ $(document).ready( function () {
                    $('#msg').html(data);
                    $('.modal').modal('show');
                    countItem();
-                   console.log(data)
            }
        });
     });
@@ -129,7 +128,13 @@ $(document).ready( function () {
             method: 'post',
             data: {count:1},
             success: function (data) {
-                $('.badge').html(data);
+                console.log(data);
+                if(data > 0){
+                    $('.badge').show();
+                        $('.badge').html(data);
+                } else {
+                    $('.badge').hide();
+                }
             }
         })
     }
@@ -159,7 +164,6 @@ $(document).ready( function () {
             data	:	{getProduct:1},
             success	:	function(data){
                 $("#get_product").html(data);
-                return false;
             }
         })
     }

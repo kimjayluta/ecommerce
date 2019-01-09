@@ -21,7 +21,7 @@ if (!$_SESSION){
                 <li class="nav-item">
                     <a class="nav-link txtColor txt pr-0" href="cart.php" style="padding-top: 10px">
                         <i class="fas fa-shopping-cart fa-lg"></i>
-                        <span class="badge badge-pill badge-danger" style="font-size: 15px;margin-left: -10px;">1</span>
+                        <span class="badge badge-pill badge-danger" style="font-size: 15px;margin-left: -10px;"></span>
                     </a>
                 </li>
                 <li class="nav-item">
