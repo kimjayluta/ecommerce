@@ -1,0 +1,52 @@
+.list{
+    font-size: 16px;
+    color: #6c757d;
+}
+.list:hover{
+    color: black;
+}
+.list-group-item{
+    padding:7px;
+}
+.crd{
+    position: relative;
+}
+.cd{
+    position: absolute;
+    width: 100%;
+    height: 268px;
+    border-radius: 0;
+    background: #0000006e;
+    opacity: 0;
+    transition: 450ms;
+}
+.crd:hover .cd{
+    opacity: 1;
+}
+.catCd{
+    background-color: transparent;
+    border: 0;
+}
+.catHed{
+    background-color: transparent;
+    padding: 7px 10px;
+    border: 0;
+    color: black;
+}
+.catList{
+    background-color: transparent;
+    border:0;
+}
+.viewBtn{
+    margin-top: 5rem;
+}
+.design{
+    border-radius: 12px;
+    box-shadow: 0 6px 10px -4px rgba(0,0,0,.15);
+}
+.srch{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);
+}
+.srch:hover{
+    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);
+}
