@@ -105,8 +105,7 @@ $(document).ready( function () {
 
     // Get * product
     getProd();
-    // count item in the cart
-    countItem();
+
     // add product in cart function
     $('#get_product').on('click', '.pBtn', function () {
        const pID = $(this).data("id");
@@ -121,23 +120,7 @@ $(document).ready( function () {
            }
        });
     });
-    // Counting the product in the cart
-    function countItem() {
-        $.ajax({
-            url: 'includes/cart_function.php',
-            method: 'post',
-            data: {count:1},
-            success: function (data) {
-                console.log(data);
-                if(data > 0){
-                    $('.badge').show();
-                        $('.badge').html(data);
-                } else {
-                    $('.badge').hide();
-                }
-            }
-        })
-    }
+
     // Get product by selected category
     $('.list').on('click',function () {
         // Get the id of the selected category
@@ -177,8 +160,6 @@ $(document).ready( function () {
             $(this).parent("li").css("background-color","white");
         }
     );
-
-    // Function for getting all the product
 });
 </script>
 <?php include "./footer.php"?>

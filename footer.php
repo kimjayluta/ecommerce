@@ -3,5 +3,29 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <!--Smooth Scroll Js-->
 <script src="js/smooth.js"></script>
+<script>
+$(document).ready(function () {
+    // count item in the cart
+    countItem();
+
+    // Counting the product in the cart
+    function countItem() {
+        $.ajax({
+            url: 'includes/cart_function.php',
+            method: 'post',
+            data: {count:1},
+            success: function (data) {
+                console.log(data);
+                if(data > 0){
+                    $('.badge').show();
+                    $('.badge').html(data);
+                } else {
+                    $('.badge').hide();
+                }
+            }
+        })
+    }
+})
+</script>
 </body>
 </html>

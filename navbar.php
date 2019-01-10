@@ -1,9 +1,16 @@
 <?php
 session_start();
 $loggedIn = true;
-
+@$uid = '';
 if (!$_SESSION){
     $loggedIn = false;
+} else {
+    $uid = $_SESSION['id'];
+    $uType = $_SESSION['type'];
+
+    if($uType == 1){
+        header('location: ../admin/dashboard.php');
+    }
 }
 
 ?>
@@ -19,7 +26,8 @@ if (!$_SESSION){
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link txtColor txt pr-0" href="cart.php" style="padding-top: 10px">
+                    <a class="nav-link txtColor txt pr-0" href="cart.php?uid=<?php echo $uid?>"
+                       style="padding-top: 10px">
                         <i class="fas fa-shopping-cart fa-lg"></i>
                         <span class="badge badge-pill badge-danger" style="font-size: 15px;margin-left: -10px;"></span>
                     </a>

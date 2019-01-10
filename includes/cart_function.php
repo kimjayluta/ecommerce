@@ -3,8 +3,10 @@ session_start();
 include_once 'db.php';
 // to get ip address
 $ip_add = getenv("REMOTE_ADDR");
+
 @$uid = $_SESSION['id'];
 $sql = '';
+
 // add product in to cart
 if (isset($_POST['pID'])){
     $pID = $_POST['pID'];
@@ -39,6 +41,7 @@ if (isset($_POST['pID'])){
         }
     }
 }
+
 // Counting the product in the cart
 if(isset($_POST['count'])){
     if (isset($_SESSION['id'])){
@@ -52,3 +55,5 @@ if(isset($_POST['count'])){
     echo $row['count_item'];
     exit;
 }
+
+// To output the product in the cart page
