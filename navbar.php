@@ -26,7 +26,7 @@ if (!$_SESSION){
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link txtColor txt pr-0" href="cart.php?uid=<?php echo $uid?>"
+                    <a class="nav-link txtColor txt pr-0" href="cart.php"
                        style="padding-top: 10px">
                         <i class="fas fa-shopping-cart fa-lg"></i>
                         <span class="badge badge-pill badge-danger" style="font-size: 15px;margin-left: -10px;"></span>

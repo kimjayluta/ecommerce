@@ -5,11 +5,13 @@ $sql = '';
 if (isset($_POST['getProduct'])){
     $sql = "SELECT * FROM `product`";
 }
+
 // Get the product by categorie
 if (isset($_POST['cid'])){
     $catID = $_POST['cid'];
     $sql = "SELECT * FROM `product` WHERE `prod_cat`='$catID'";
 }
+
 // Output the data
 if ($sql !== ''){
     $query = mysqli_query($conn, $sql);

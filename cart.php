@@ -55,33 +55,8 @@ if (!$_SESSION){
                         <th scope="col" class="tdBorder">Total</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">
-                            <button class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </th>
-                        <td>
-                            <div class="card" style="width: 92px;">
-                                <img src="img/c3.PNG" alt="#" class="card-img-top">
-                            </div>
-                        </td>
-                        <td>
-                           <div class="card" style="width: 185px;border: 0;">
-                               <span> Streetwear Red Snapback </span>
-                           </div>
-                        </td>
-                        <td>
-                            <form id="myform" method="POST" action="#">
-                                <input type="button" value="-" class="qtyMinus buton" style="font-weight: bold;" disabled>
-                                <input type="text" name="qty" id="qty" value="1" class="qty" style="">
-                                <input type='button' value="+" class="qtyPlus buton" style="background-color: white">
-                            </form>
-                        </td>
-                        <td class="text-muted">₱849.75</td>
-                        <td class="text-muted">₱849.75</td>
-                    </tr>
+                    <tbody id="cartProd">
+
                     </tbody>
                 </table>
             </div>
@@ -115,56 +90,21 @@ if (!$_SESSION){
     </div>
 </section>
 <!-- Js -->
+<script type="text/javascript" src="js/qty_func.js"></script>
 <script type="text/javascript">
-    $(document).ready(
-        //Quantity function add and minus
-        function () {
-            let j = jQuery;
-            let minus = $('.qtyMinus');
-            let plus = $('.qtyPlus');
-            let currentVal = j('#qty').val();
-            let defVal = 1;
-
-
-            //Set default value
-            $('#qty').val(defVal);
-            $(minus).css("cursor", 'not-allowed');
-
-            //Add button
-            $(plus).on('click', function () {
-                $('#qty').val(++defVal);
-                // Enable - button when the value of #qty is greater than 1
-                if(defVal > 1){
-                    $(minus).prop("disabled", false);
-                    $(minus).css("background-color", 'white');
-                    $(minus).css("cursor", 'pointer');
-
-                }
-                // To disable + button when the value of #qty is greater than 10
-                if(defVal > 9){
-                    $(plus).prop("disabled", true);
-                    $(plus).css("background-color", 'whitesmoke');
-                    $(plus).css("cursor", 'not-allowed');
-                }
-            });
-
-            //Minus button
-            $(minus).on('click', function () {
-                $('#qty').val(--defVal);
-                // To disable - button when the value of #qty is equal to 1
-                if(defVal > 0 && defVal < 2){
-                    $(minus).prop("disabled", true);
-                    $(minus).css("background-color", 'whitesmoke');
-                    $(minus).css("cursor", 'not-allowed');
-                }
-                // To disable + button when the value of #qty is less than 10
-                if(defVal < 10){
-                    $(plus).prop("disabled", false);
-                    $(plus).css("background-color", 'white');
-                    $(plus).css("cursor", 'pointer');
+    $(document).ready(function () {
+        getProd();
+        // To output the product
+        function getProd(){
+            $.ajax({
+                url: 'includes/cart_function.php',
+                method: 'post',
+                data: {getProd:1},
+                success: function (data) {
+                    $('#cartProd').html(data);
                 }
             });
         }
-    );
+    });
 </script>
 <?php include "./footer.php"?>

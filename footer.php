@@ -5,26 +5,7 @@
 <script src="js/smooth.js"></script>
 <script>
 $(document).ready(function () {
-    // count item in the cart
-    countItem();
 
-    // Counting the product in the cart
-    function countItem() {
-        $.ajax({
-            url: 'includes/cart_function.php',
-            method: 'post',
-            data: {count:1},
-            success: function (data) {
-                console.log(data);
-                if(data > 0){
-                    $('.badge').show();
-                    $('.badge').html(data);
-                } else {
-                    $('.badge').hide();
-                }
-            }
-        })
-    }
 })
 </script>
 </body>

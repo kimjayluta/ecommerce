@@ -44,7 +44,7 @@ if (isset($_POST['pID'])){
 
 // Counting the product in the cart
 if(isset($_POST['count'])){
-    if (isset($_SESSION['id'])){
+    if (isset($uid)){
         $sql = "SELECT COUNT(*) AS count_item FROM cart WHERE user_id = $uid";
     } else {
         $sql = "SELECT COUNT(*) AS count_item FROM cart WHERE ip_add = '$ip_add' AND user_id < 0";
@@ -57,3 +57,42 @@ if(isset($_POST['count'])){
 }
 
 // To output the product in the cart page
+if (isset($_POST['getProd'])){
+    $sql = '';
+
+    if (isset($uid)){
+        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart  b WHERE a.id = b.prod_id AND b.user_id='$uid'";
+//        $sql = "SELECT prod_id FROM cart WHERE user_id = '$uid'";
+    } else {
+        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart b WHERE a.id=b.prod_id AND b.user_id=-1 AND ip_add='$ip_add'";
+//        $sql = "SELECT prod_id FROM cart WHERE ip_add = '$ip_add' AND user_id = -1";
+    }
+    $query = mysqli_query($conn, $sql);
+
+    while ($row =  mysqli_fetch_array($query)){
+        echo
+            '<tr>'.
+                '<th scope="row">'.
+                    '<button class="btn btn-danger">'.
+                        '<i class="fas fa-trash-alt"></i>'.
+                    '</button>'.
+                '</th>'.
+                '<td>'.
+                    '<img src="../admin/includes/img/'.$row['prod_img'].'" alt="#" class="card-img-top"
+                        style="width: 92px; height:92px;">'.
+                '</td>'.
+                '<td>'.
+                   '<div class="card" style="width: 185px;border: 0;">'.
+                       '<span> '.$row['name'].'</span>'.
+                   '</div>'.
+                '</td>'.
+                '<td>'.
+                    '<input type="text" name="qty" id="qty" value="1" class="qty" style="">'.
+                '</td>'.
+                '<td class="text-muted">₱'.$row['price'].'</td>'.
+                '<td class="text-muted">₱849.75</td>'.
+            '</tr>';
+    }
+
+
+}

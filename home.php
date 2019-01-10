@@ -105,6 +105,8 @@ $(document).ready( function () {
 
     // Get * product
     getProd();
+    // count item in the cart
+    countItem();
 
     // add product in cart function
     $('#get_product').on('click', '.pBtn', function () {
@@ -120,6 +122,8 @@ $(document).ready( function () {
            }
        });
     });
+
+
 
     // Get product by selected category
     $('.list').on('click',function () {
@@ -151,6 +155,24 @@ $(document).ready( function () {
         })
     }
 
+
+    // Counting the product in the cart
+    function countItem() {
+        $.ajax({
+            url: 'includes/cart_function.php',
+            method: 'post',
+            data: {count:1},
+            success: function (data) {
+                if(data > 0){
+                    $('.badge').show();
+                    $('.badge').html(data);
+                } else {
+                    $('.badge').hide();
+                }
+            }
+        })
+    }
+    
     // Function for hover effect in category
     $(".item").hover(
         function () {
@@ -162,4 +184,4 @@ $(document).ready( function () {
     );
 });
 </script>
-<?php include "./footer.php"?>
+<?php include 'footer.php';?>
