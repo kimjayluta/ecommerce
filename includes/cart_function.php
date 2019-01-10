@@ -35,7 +35,7 @@ if (isset($_POST['pID'])){
     if ($sql !== ''){
         $query = mysqli_query($conn, $sql);
         if ($query){
-            echo '<h5 class="text-success" style="font-family: sans-serif">Product is successfully added in your cart...</h5>';
+            echo '<h5 class="text-success">Product is successfully added in your cart...</h5>';
         } else {
             echo 'error';
         }
@@ -87,12 +87,16 @@ if (isset($_POST['getProd'])){
                    '</div>'.
                 '</td>'.
                 '<td>'.
-                    '<input type="text" name="qty" id="qty" value="1" class="qty" style="">'.
+                    '<input type="text" name="qty" value="1" class="qty">'.
                 '</td>'.
-                '<td class="text-muted">₱'.$row['price'].'</td>'.
-                '<td class="text-muted">₱849.75</td>'.
+                '<td>'.
+                    '<input type="text" name="price" value="₱ '.$row['price'].'" class="totalBox price" disabled="disabled">'.
+                '</td>'.
+                '<td>'.
+                    '<input type="text" name="total" value="₱ '.$row['price'].'" class="totalBox total" disabled="disabled">'.
+                '</td>'.
+
             '</tr>';
     }
-
 
 }

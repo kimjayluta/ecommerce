@@ -22,6 +22,11 @@ if (!$_SESSION){
         width: 50px;
         text-align: center;
     }
+    .totalBox{
+        margin-bottom: 0!important;
+        width: 70px;
+        text-align: right;
+    }
     .tdBorder{
         border-top: none !important;
     }
@@ -90,7 +95,7 @@ if (!$_SESSION){
     </div>
 </section>
 <!-- Js -->
-<script type="text/javascript" src="js/qty_func.js"></script>
+<script type="text/javascript" src="js/count_prod.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         getProd();
@@ -105,6 +110,22 @@ if (!$_SESSION){
                 }
             });
         }
+
+        //
+        $('#cartProd').on('keyup', '.qty', function () {
+            let qty = $(this).val();
+            let prc = $(this).parents("tr").find(".price").val();
+            // split the peso sign
+            prc = Number(prc.split(" ")[1]);
+            if(isNaN(qty)){
+                qty = 1;
+            } else if(qty < 1){
+                qty = 1;
+            }
+
+            let total = qty * prc;
+            $(this).parents("tr").find(".total").val('₱ '+total);
+        });
     });
 </script>
 <?php include "./footer.php"?>

@@ -94,7 +94,7 @@ if (!$_SESSION){
                         By clicking Sign up, you have read and agree to our
                         <a href="#">Terms, Data Policy, Cookies Policy.</a>
                     </small>
-                    <br />
+                    <br/>
                     <small>
                         <a href="login.php">Already have an account ? Click here!</a>
                     </small>
@@ -103,5 +103,7 @@ if (!$_SESSION){
         </div>
     </div>
 </section>
-<script src="js/register.js"></script>
+<script type="text/javascript" src="js/register.js"></script>
+<script type="text/javascript" src="js/count_prod.js"></script>
+
 <?php include "./footer.php"?>

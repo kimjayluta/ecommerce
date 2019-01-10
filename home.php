@@ -172,7 +172,7 @@ $(document).ready( function () {
             }
         })
     }
-    
+
     // Function for hover effect in category
     $(".item").hover(
         function () {

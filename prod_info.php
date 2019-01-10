@@ -93,4 +93,6 @@ if (isset($_GET['id'])){
     </div>
 </section>
 <script type="text/javascript" src="js/prod_info.js"></script>
+<script type="text/javascript" src="js/count_prod.js"></script>
+
 <?php include "./footer.php"?>
