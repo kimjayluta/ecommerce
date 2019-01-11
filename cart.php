@@ -24,7 +24,7 @@ if (!$_SESSION){
     }
     .totalBox{
         margin-bottom: 0!important;
-        width: 70px;
+        width: 100px;
         text-align: right;
     }
     .tdBorder{
@@ -83,11 +83,15 @@ if (!$_SESSION){
                        </tr>
                        <tr class="text-muted">
                            <td class="tdBorder">VAT</td>
-                           <td class="tdBorder">₱849.75</td>
+                           <td class="tdBorder">
+                               <input type="text" id="tax" value="" class="totalBox" disabled="disabled">
+                           </td>
                        </tr>
                        <tr class="text-muted">
                            <td>Total Order</td>
-                           <td>₱849.75</td>
+                           <td>
+                               <input type="text" id="totalOrder" value="" class="totalBox" disabled="disabled">
+                           </td>
                        </tr>
                    </tbody>
                </table>
@@ -101,10 +105,18 @@ if (!$_SESSION){
 <script type="text/javascript">
     $(document).ready(function () {
 
-        function tax(){
-            let tax =  0;
-            let subTotal = $('#cartProd').find('#subTotal').val();
-            console.log(subTotal);
+        function totalTaxOrder(){
+            let tax =  0, totalOrder =  0;
+
+            let subTotal = $('#subTotal').val();
+            subTotal = Number(subTotal.split(" ")[1]);
+
+            tax = subTotal * 0.12;
+            totalOrder = subTotal + tax;
+
+            $('#tax').val('₱ ' + tax);
+            $('#totalOrder').val('₱ ' + totalOrder);
+            console.log(totalOrder);
         }
 
         function computeSubTotal(){
@@ -145,7 +157,7 @@ if (!$_SESSION){
                     // Compute the subtotal;
                     computeSubTotal();
                     // Total tax
-                    tax();
+                    totalTaxOrder();
                 }
             });
         }
@@ -158,6 +170,8 @@ if (!$_SESSION){
             computeTotal(this);
             // Compute the subtotal;
             computeSubTotal();
+            // Compute the total order and the tax
+            totalTaxOrder();
         });
     });
 </script>
