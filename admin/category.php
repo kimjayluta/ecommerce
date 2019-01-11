@@ -198,10 +198,5 @@ include "../includes/db.php";
         </form>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('#cat_table').DataTable();
-    });
-</script>
 <script type="text/javascript" src="js/category.js"></script>
 <?php include "footer.php";?>

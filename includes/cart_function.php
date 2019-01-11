@@ -62,10 +62,9 @@ if (isset($_POST['getProd'])){
 
     if (isset($uid)){
         $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart  b WHERE a.id = b.prod_id AND b.user_id='$uid'";
-//        $sql = "SELECT prod_id FROM cart WHERE user_id = '$uid'";
     } else {
         $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart b WHERE a.id=b.prod_id AND b.user_id=-1 AND ip_add='$ip_add'";
-//        $sql = "SELECT prod_id FROM cart WHERE ip_add = '$ip_add' AND user_id = -1";
+
     }
     $query = mysqli_query($conn, $sql);
 
@@ -73,7 +72,8 @@ if (isset($_POST['getProd'])){
         echo
             '<tr>'.
                 '<th scope="row">'.
-                    '<button class="btn btn-danger">'.
+                    '<button class="btn btn-danger delBtn" data-id="'.$row['id'].'" data-toggle="modal" 
+                            data-target="#deleteModal">'.
                         '<i class="fas fa-trash-alt"></i>'.
                     '</button>'.
                 '</th>'.
@@ -90,12 +90,39 @@ if (isset($_POST['getProd'])){
                     '<input type="text" name="qty" value="'.$row['qty'].'" class="qty">'.
                 '</td>'.
                 '<td>'.
-                    '<input type="text" name="price" value="₱ '.$row['price'].'" class="totalBox price" disabled="disabled">'.
+                    '<input type="text" name="price" value="₱ '.$row['price'].'" class="totalBox price" 
+                        disabled="disabled">'.
                 '</td>'.
                 '<td>'.
-                    '<input type="text" name="total" value="₱ '.$row['price'] * $row['qty'] .'" class="totalBox total" disabled="disabled">'.
+                    '<input type="text" name="total" value="₱ '.$row['price'] * $row['qty'] .'" class="totalBox total" 
+                        disabled="disabled">'.
                 '</td>'.
             '</tr>';
+    }
+}
+
+// Remove product from cart
+if(isset($_POST['delID'])){
+
+    $delID = $_POST['delID'];
+
+    if (isset($uid)){
+        $sql = "DELETE FROM cart WHERE id = '$delID' AND user_id = '$uid' AND ip_add = '$ip_add'";
+    } else {
+        $sql = "DELETE FROM cart WHERE id ='$delID' AND ip_add = '$ip_add' AND user_id = -1";
+    }
+
+    $query = mysqli_query($conn, $sql);
+    if ($query){
+        echo
+            '<div class="alert alert-success alert-dismissible fade show" role="alert">
+              <h6>Product successfully removed.</h6>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>';
+    } else {
+        echo $sql;
     }
 
 }

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $('#cat_table').DataTable();
+
     // To Clear the modal when add button is clicked
     $('#addModal').on("hidden.bs.modal", function () {
         $(this).find(".modal-title").html("Add category:");

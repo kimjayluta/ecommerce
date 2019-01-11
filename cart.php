@@ -39,6 +39,10 @@ if (!$_SESSION){
         background-color:#343a40;
         color: white;
     }
+    .ttl{
+        border: 0;
+        background: none;
+    }
 </style>
 <section>
     <div class="container mt-5">
@@ -49,6 +53,9 @@ if (!$_SESSION){
         </div>
         <div class="row ">
             <div class="col-8">
+                <div id="delMsg">
+
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -78,13 +85,13 @@ if (!$_SESSION){
                        <tr class="text-muted">
                            <td class="tdBorder">Subtotal</td>
                            <td class="tdBorder" >
-                               <input type="text" id="subTotal" value="" class="totalBox" disabled="disabled">
+                               <input type="text" id="subTotal" value="" class="totalBox ttl" disabled="disabled">
                            </td>
                        </tr>
                        <tr class="text-muted">
                            <td class="tdBorder">VAT</td>
                            <td class="tdBorder">
-                               <input type="text" id="tax" value="" class="totalBox" disabled="disabled">
+                               <input type="text" id="tax" value="" class="totalBox ttl" disabled="disabled">
                            </td>
                        </tr>
                        <tr class="text-muted">
@@ -100,10 +107,46 @@ if (!$_SESSION){
         </div>
     </div>
 </section>
+<!--Modal Delete-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Remove product: </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure to remove this product from your cart?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                <button type="button"  class="btn btn-danger removeProd" data-dismiss="modal">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Js -->
-<script type="text/javascript" src="js/count_prod.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        // Counting the product in the cart
+        function countItem() {
+            $.ajax({
+                url: 'includes/cart_function.php',
+                method: 'post',
+                data: {count:1},
+                success: function (data) {
+                    if(data > 0){
+                        $('.badge').show();
+                        $('.badge').html(data);
+                    } else {
+                        $('.badge').hide();
+                    }
+                }
+            })
+        }
 
         function totalTaxOrder(){
             let tax =  0, totalOrder =  0;
@@ -116,7 +159,6 @@ if (!$_SESSION){
 
             $('#tax').val('₱ ' + tax.toFixed(2));
             $('#totalOrder').html('<h6>₱ '  + totalOrder + '</h6>');
-            console.log(totalOrder);
         }
 
         function computeSubTotal(){
@@ -163,6 +205,7 @@ if (!$_SESSION){
         }
 
         getProd();
+        countItem();
 
 
         $('#cartProd').on("keyup keypress", ".qty", function(){
@@ -174,6 +217,34 @@ if (!$_SESSION){
             totalTaxOrder();
         });
 
+        let delID, targetBtn;
+
+        $('#cartProd').on('click', '.delBtn', function () {
+            // Save the delID
+            delID = $(this).data("id");
+            targetBtn = $(this);
+        });
+
+        $('.removeProd').on('click', function () {
+            if (typeof delID === "undefined")
+                return; // Do not execute ajax when delID is not found
+
+            $.ajax({
+                url: 'includes/cart_function.php',
+                method: 'post',
+                data: {delID:delID},
+                success: function (data) {
+                    $('#delMsg').html(data);
+
+                    $(targetBtn).closest("tr").remove();
+                    countItem();
+
+                    // Delete the del ID after use
+                    delID = undefined;
+                    targetBtn = undefined;
+                }
+            });
+        })
 
     });
 </script>
