@@ -101,6 +101,11 @@ if (!$_SESSION){
 <script type="text/javascript">
     $(document).ready(function () {
 
+        function tax(){
+            let tax =  0;
+            let subTotal = $('#cartProd').find('#subTotal').val();
+            console.log(subTotal);
+        }
 
         function computeSubTotal(){
             // Compute SubTotal
@@ -111,12 +116,11 @@ if (!$_SESSION){
 
             // Replace subTotal
             $('#subTotal').val('₱ ' + sub_total);
-            console.log("SubTotal", sub_total);
         }
 
         function computeTotal(elem){
 
-            let qty = Number($(elem).val()) < 1 ? Number($(elem).val()) : 1;
+            let qty = !Number($(elem).val()) < 1 ? Number($(elem).val()) : 1;
             let prc =  $(elem).parents("tr").find(".price").val();
 
             // split the peso sign
@@ -124,20 +128,8 @@ if (!$_SESSION){
 
             // Replace the total
             let total = qty * prc;
-            $(elem).parents("tr").find(".total").val('₱ ' + total)
-
-            console.log(elem, "Total", total);
+            $(elem).parents("tr").find(".total").val('₱ ' + total);
             return total;
-        }
-
-        function init(){
-            // Compute totals whenever the page loads
-            $("#cardProd").find(".qty").each(function(i, elem){
-                computeTotal($(elem));
-            });
-
-            // Compute the subtotal;
-            computeSubTotal();
         }
 
         function getProd(){
@@ -150,17 +142,20 @@ if (!$_SESSION){
                     // Put thee data conent
                     $('#cartProd').html(data);
 
-                    init();
+                    // Compute the subtotal;
+                    computeSubTotal();
+                    // Total tax
+                    tax();
                 }
             });
         }
+
         getProd();
 
 
-
         $('#cartProd').on("keyup keypress", ".qty", function(){
+            // Compute the total
             computeTotal(this);
-
             // Compute the subtotal;
             computeSubTotal();
         });
