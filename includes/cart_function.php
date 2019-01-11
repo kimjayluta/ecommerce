@@ -87,15 +87,14 @@ if (isset($_POST['getProd'])){
                    '</div>'.
                 '</td>'.
                 '<td>'.
-                    '<input type="text" name="qty" value="1" class="qty">'.
+                    '<input type="text" name="qty" value="'.$row['qty'].'" class="qty">'.
                 '</td>'.
                 '<td>'.
-                    '<input type="text" name="price" value="₱ '.$row['price'].'" class="totalBox price" disabled="disabled">'.
+                    '<input type="text" name="price" value="₱ '.$row['price'].'" class="totalBox price">'.
                 '</td>'.
                 '<td>'.
-                    '<input type="text" name="total" value="₱ '.$row['price'].'" class="totalBox total" disabled="disabled">'.
+                    '<input type="text" name="total" value="₱ '.$row['price'].'" class="totalBox total">'.
                 '</td>'.
-
             '</tr>';
     }
 

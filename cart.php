@@ -77,7 +77,9 @@ if (!$_SESSION){
                    <tbody>
                        <tr class="text-muted">
                            <td class="tdBorder">Subtotal</td>
-                           <td class="tdBorder">₱849.75</td>
+                           <td class="tdBorder" >
+                               <input type="text" id="subTotal" value="" class="totalBox" disabled="disabled">
+                           </td>
                        </tr>
                        <tr class="text-muted">
                            <td class="tdBorder">VAT</td>
@@ -98,33 +100,69 @@ if (!$_SESSION){
 <script type="text/javascript" src="js/count_prod.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        getProd();
-        // To output the product
+
+
+        function computeSubTotal(){
+            // Compute SubTotal
+            let sub_total = 0;
+            $('#cartProd').find(".total").each(function(i, valElem){
+                sub_total += Number($(valElem).val().split(" ")[1]) || 0;
+            });
+
+            // Replace subTotal
+            $('#subTotal').val('₱ ' + sub_total);
+            console.log("SubTotal", sub_total);
+        }
+
+        function computeTotal(elem){
+
+            let qty = Number($(elem).val()) < 1 ? Number($(elem).val()) : 1;
+            let prc =  $(elem).parents("tr").find(".price").val();
+
+            // split the peso sign
+            prc = Number(prc.split(" ")[1]);
+
+            // Replace the total
+            let total = qty * prc;
+            $(elem).parents("tr").find(".total").val('₱ ' + total)
+
+            console.log(elem, "Total", total);
+            return total;
+        }
+
+        function init(){
+            // Compute totals whenever the page loads
+            $("#cardProd").find(".qty").each(function(i, elem){
+                computeTotal($(elem));
+            });
+
+            // Compute the subtotal;
+            computeSubTotal();
+        }
+
         function getProd(){
             $.ajax({
                 url: 'includes/cart_function.php',
                 method: 'post',
                 data: {getProd:1},
                 success: function (data) {
+
+                    // Put thee data conent
                     $('#cartProd').html(data);
+
+                    init();
                 }
             });
         }
+        getProd();
 
-        //
-        $('#cartProd').on('keyup', '.qty', function () {
-            let qty = $(this).val();
-            let prc = $(this).parents("tr").find(".price").val();
-            // split the peso sign
-            prc = Number(prc.split(" ")[1]);
-            if(isNaN(qty)){
-                qty = 1;
-            } else if(qty < 1){
-                qty = 1;
-            }
 
-            let total = qty * prc;
-            $(this).parents("tr").find(".total").val('₱ '+total);
+
+        $('#cartProd').on("keyup keypress", ".qty", function(){
+            computeTotal(this);
+
+            // Compute the subtotal;
+            computeSubTotal();
         });
     });
 </script>
