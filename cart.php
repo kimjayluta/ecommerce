@@ -89,8 +89,8 @@ if (!$_SESSION){
                        </tr>
                        <tr class="text-muted">
                            <td>Total Order</td>
-                           <td>
-                               <input type="text" id="totalOrder" value="" class="totalBox" disabled="disabled">
+                           <td id="totalOrder" style="text-align: right;color: black;">
+
                            </td>
                        </tr>
                    </tbody>
@@ -114,8 +114,8 @@ if (!$_SESSION){
             tax = subTotal * 0.12;
             totalOrder = subTotal + tax;
 
-            $('#tax').val('₱ ' + tax);
-            $('#totalOrder').val('₱ ' + totalOrder);
+            $('#tax').val('₱ ' + tax.toFixed(2));
+            $('#totalOrder').html('<h6>₱ '  + totalOrder + '</h6>');
             console.log(totalOrder);
         }
 
@@ -173,6 +173,8 @@ if (!$_SESSION){
             // Compute the total order and the tax
             totalTaxOrder();
         });
+
+
     });
 </script>
 <?php include "./footer.php"?>
