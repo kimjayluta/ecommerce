@@ -59,7 +59,7 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
     <div class="container mt-5">
         <div class="card" style="border: 0">
             <div class="card-header" style="text-align: center; background-color: transparent; border: 0">
-                <h3>Shopping Cart</h3>
+                <h3 id="title">Shopping Cart</h3>
             </div>
         </div>
         <div class="row ">
@@ -81,32 +81,35 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
                     </tbody>
                 </table>
                 <form id="formCheckout" style="display: none">
+                    <h5>Billing information: </h5>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="name">Name: </label>
+                        <div class="form-group col-md-7">
+                            <label for="name">Name: <span class="text-danger">NOTE: Full name</span></label>
                             <input type="text" class="form-control" id="name">
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-5">
                             <label for="inputPassword4">Contact Number: </label>
                             <input type="number" class="form-control" id="cnum">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="inputAddress">Address: </label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="Street, Baranggay">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputAddress2">Address 2</label>
-                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="strt">Street: </label>
+                            <input type="text" class="form-control" id="strt">
+                        </div>
+                        <div class="form-group col-md-7">
+                            <label for="brgy">Baranggay: </label>
+                            <input type="text" class="form-control" id="brgy">
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputCity">City</label>
-                            <input type="text" class="form-control" id="inputCity">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="inputState">State</label>
-                            <select id="inputState" class="form-control">
+                            <label for="state">State</label>
+                            <select id="state" class="form-control">
                                 <option selected>Choose...</option>
                                 <?php
                                 foreach ($listOfCity as $city){
@@ -116,8 +119,16 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
                             </select>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="inputZip">Zip</label>
-                            <input type="text" class="form-control" id="inputZip">
+                            <label for="zipCode">Zip</label>
+                            <input type="text" class="form-control" id="zipCode">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4 mt-4">
+                            <h5>Payment Method: </h5>
+                            <select id="inputState" class="form-control">
+                                <option value="cod">Cash on delivery</option>
+                            </select>
                         </div>
                     </div>
                 </form>
@@ -146,7 +157,6 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
                        <tr class="text-muted">
                            <td>Total Order</td>
                            <td id="totalOrder" style="text-align: right;color: black;">
-
                            </td>
                        </tr>
                    </tbody>
@@ -186,27 +196,30 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
        $('#checkout').on('click', function () {
            $('#prodTable').hide();
            $(this).hide();
-
+           $('#title').text('Billing address and Payment');
            $('#placeOrder').show();
            $('#formCheckout').show();
        });
        
        $('#placeOrder').on('click', function () {
 
+           const name = $('#name').val();
+           const cnum = $('#cnum').val();
+           const strt = $('#strt').val();
+           const brgy = $('#brgy').val();
+           const city = $('#city').val();
+           const state = $('#state').val();
+           const zipCode = $('#zipCode').val();
+           const data = "name="+ name +"&cnum="+ cnum +"&strt="+ strt +"&brgy="+ brgy + "&city="+ city +
+                        "&state="+ state + "&zipCode" + zipCode;
+           console.log(data);
+
            $.ajax({
                url: 'includes/cart_function.php',
                method: 'post',
-               data: {
-                   name: $('#name').val(),
-                   cnum: $('#cnum').val(),
-                   strt: $('#strt').val(),
-                   brgy: $('#brgy').val(),
-                   city: $('#city').val(),
-                   state: $('#state').val(),
-                   zipCode: $('#zipCode').val(),
-               },
+               data: data,
                success: function () {
-
+                   location.href("home.php?msg");
                }
            })
        });
