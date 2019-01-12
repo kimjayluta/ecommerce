@@ -1,12 +1,12 @@
 <?php
 include "./header.php";
 include "./navbar.php";
-$loggedIn = true;
+$loggedIn = false;
+$loginFromCart = false;
 
-if (!$_SESSION){
-    $loggedIn = false;
+if ($_SESSION){
+    $loggedIn = true;
 }
-
 ?>
 <title>Login</title>
 <style>

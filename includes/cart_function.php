@@ -10,12 +10,13 @@ $sql = '';
 // add product in to cart
 if (isset($_POST['pID'])){
     $pID = $_POST['pID'];
+    // if user is loggedIn
     if (isset($uid)){
         $query = mysqli_query($conn,"SELECT * FROM cart WHERE prod_id = '$pID' AND user_id = '$uid'");
         // If tig add nya na su product
         if (mysqli_num_rows($query) > 0){
             // Kpag tig add nya na
-            echo '<h5 class="text-warning" style="font-family: sans-serif">Product is already added in your cart...</h5>';
+            echo '<h6 class="text-warning">Product is already added in your cart...</h6>';
         } else {
             // Kapag nka login ang user session_id gagamiton ta pag insert
             $sql = "INSERT INTO `cart`(`prod_id`,`ip_add`,`user_id`,`qty`) VALUES ('$pID','$ip_add','$uid',1)";
@@ -25,7 +26,7 @@ if (isset($_POST['pID'])){
         // If tig add nya na su product
         if (mysqli_num_rows($query) > 0){
             // Kpag tig add nya na
-            echo '<h5 class="text-warning" style="font-family: sans-serif">Product is already added in your cart...</h5>';
+            echo '<h6 class="text-warning">Product is already added in your cart...</h6>';
         } else {
             // Kapag dae pa nka login esisave ta su data gamit ang ip_address
             $sql = "INSERT INTO `cart`(`prod_id`,`ip_add`,`user_id`,`qty`) VALUES ('$pID','$ip_add',-1,1)";
@@ -61,10 +62,11 @@ if (isset($_POST['getProd'])){
     $sql = '';
 
     if (isset($uid)){
-        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart  b WHERE a.id = b.prod_id AND b.user_id='$uid'";
+        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart  b
+                WHERE a.id = b.prod_id AND b.ip_add = '$ip_add' AND user_id = '$uid'";
     } else {
-        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart b WHERE a.id=b.prod_id AND b.user_id=-1 AND ip_add='$ip_add'";
-
+        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart b
+                WHERE a.id=b.prod_id AND ip_add='$ip_add' AND user_id = -1";
     }
     $query = mysqli_query($conn, $sql);
 

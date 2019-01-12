@@ -9,10 +9,8 @@ $(document).ready(function () {
             data: data,
             success: function (data) {
                 if(data === 'usn'){
-                    console.log('username error');
                    error('You\'re username is incorrect.');
                 } else if (data === 'pwd'){
-                    console.log('password error');
                     error('You\'re password is incorrect.');
                 } else {
                     location.href = '../home.php';

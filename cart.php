@@ -2,11 +2,22 @@
 include "./header.php";
 include "./includes/db.php";
 include "./navbar.php";
-$loggedIn = true;
-
-if (!$_SESSION){
-    $loggedIn = false;
+$loggedIn = false;
+// Kung nakalogin ang user
+if ($_SESSION){
+    $loggedIn = true;
 }
+$listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','Aklan', 'Albay','Antique','Apayao',
+                    'Aurora','Basilan','Bataan','Batanes','Batangas','Benguet','Biliran','Bohol','Bukidnon','Bulacan',
+                    'Cagayan','Camarines Norte', 'Camarines Sur','Camiguin','Capiz','Catanduanes','Cavite','Cebu',
+                    'Compostela Valley','Cotobato','Davao del Norte','Davao del Sur','Davao Oriental','Dinagat Island',
+                    'Eastern Island','Eastern Samar','Guimaras','Ifugao','Ilocos Norte','Ilocos Sur','Iloilo','Isabela',
+                    'Kalinga','La union','Laguna','Lanao del Norte','Lanao del Sur','Leyte','Maguindanao','Marinduque',
+                    'Masbate','Misamis Occidental','Misamis Oriental','Mountain Province','Negros Occidental',
+                    'Negros Oriental','Northern Samar','Nueva Ecija','Nueva Vizcaya','Occidental Mindoro','Palawan',
+                    'Pampanga','Pangasinan','Quezon','Qurino','Rizal','Romblon','Samar','Sarangani','Suariff Kabunsuan',
+                    'Siquijor', 'Sorsogon','South Cotobato','Southern Leyte','Sultan Kudarat','Sulu','Surigao del Norte',
+                    'Surigao del Sur','Tarlac','Tawi-tawi','Zambales','Zamboanga del Norte','Zamboanga del Sur','Zamboanga Sibugay');
 
 ?>
 <title>Cart</title>
@@ -53,10 +64,8 @@ if (!$_SESSION){
         </div>
         <div class="row ">
             <div class="col-8">
-                <div id="delMsg">
-
-                </div>
-                <table class="table">
+                <div id="delMsg"></div>
+                <table class="table" id="prodTable">
                     <thead>
                     <tr>
                         <th scope="col" class="tdBorder"></th>
@@ -71,8 +80,48 @@ if (!$_SESSION){
 
                     </tbody>
                 </table>
+                <form id="formCheckout" style="display: none">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="name">Name: </label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Contact Number: </label>
+                            <input type="number" class="form-control" id="cnum">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Address: </label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="Street, Baranggay">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress2">Address 2</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">City</label>
+                            <input type="text" class="form-control" id="inputCity">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">State</label>
+                            <select id="inputState" class="form-control">
+                                <option selected>Choose...</option>
+                                <?php
+                                foreach ($listOfCity as $city){
+                                    echo '<option value="'.$city.'">'.$city.'</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputZip">Zip</label>
+                            <input type="text" class="form-control" id="inputZip">
+                        </div>
+                    </div>
+                </form>
             </div>
-
             <div class="col-4">
                <table class="table">
                    <thead>
@@ -102,11 +151,13 @@ if (!$_SESSION){
                        </tr>
                    </tbody>
                </table>
-                <a href="#" class="btn addBtn" style="width: 100%">CHECKOUT</a>
+                <a href="javascript:void(0)" class="btn addBtn" id="placeOrder" style="display: none">PLACE ORDER</a>
+                <a href="javascript:void(0)" class="btn addBtn" id="checkout" style="width: 100%" >PROCEED TO CHECKOUT</a>
             </div>
         </div>
     </div>
 </section>
+
 <!--Modal Delete-->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -128,124 +179,37 @@ if (!$_SESSION){
     </div>
 </div>
 <!-- Js -->
-<script type="text/javascript">
-    $(document).ready(function () {
+<script type="text/javascript" src="js/cart.js"></script>
+<script>
+   $(document).ready(function () {
+       
+       $('#checkout').on('click', function () {
+           $('#prodTable').hide();
+           $(this).hide();
 
-        // Counting the product in the cart
-        function countItem() {
-            $.ajax({
-                url: 'includes/cart_function.php',
-                method: 'post',
-                data: {count:1},
-                success: function (data) {
-                    if(data > 0){
-                        $('.badge').show();
-                        $('.badge').html(data);
-                    } else {
-                        $('.badge').hide();
-                    }
-                }
-            })
-        }
+           $('#placeOrder').show();
+           $('#formCheckout').show();
+       });
+       
+       $('#placeOrder').on('click', function () {
 
-        function totalTaxOrder(){
-            let tax =  0, totalOrder =  0;
+           $.ajax({
+               url: 'includes/cart_function.php',
+               method: 'post',
+               data: {
+                   name: $('#name').val(),
+                   cnum: $('#cnum').val(),
+                   strt: $('#strt').val(),
+                   brgy: $('#brgy').val(),
+                   city: $('#city').val(),
+                   state: $('#state').val(),
+                   zipCode: $('#zipCode').val(),
+               },
+               success: function () {
 
-            let subTotal = $('#subTotal').val();
-            subTotal = Number(subTotal.split(" ")[1]);
-
-            tax = subTotal * 0.12;
-            totalOrder = subTotal + tax;
-
-            $('#tax').val('₱ ' + tax.toFixed(2));
-            $('#totalOrder').html('<h6>₱ '  + totalOrder + '</h6>');
-        }
-
-        function computeSubTotal(){
-            // Compute SubTotal
-            let sub_total = 0;
-            $('#cartProd').find(".total").each(function(i, valElem){
-                sub_total += Number($(valElem).val().split(" ")[1]) || 0;
-            });
-
-            // Replace subTotal
-            $('#subTotal').val('₱ ' + sub_total);
-        }
-
-        function computeTotal(elem){
-
-            let qty = !Number($(elem).val()) < 1 ? Number($(elem).val()) : 1;
-            let prc =  $(elem).parents("tr").find(".price").val();
-
-            // split the peso sign
-            prc = Number(prc.split(" ")[1]);
-
-            // Replace the total
-            let total = qty * prc;
-            $(elem).parents("tr").find(".total").val('₱ ' + total);
-            return total;
-        }
-
-        function getProd(){
-            $.ajax({
-                url: 'includes/cart_function.php',
-                method: 'post',
-                data: {getProd:1},
-                success: function (data) {
-
-                    // Put thee data conent
-                    $('#cartProd').html(data);
-
-                    // Compute the subtotal;
-                    computeSubTotal();
-                    // Total tax
-                    totalTaxOrder();
-                }
-            });
-        }
-
-        getProd();
-        countItem();
-
-
-        $('#cartProd').on("keyup keypress", ".qty", function(){
-            // Compute the total
-            computeTotal(this);
-            // Compute the subtotal;
-            computeSubTotal();
-            // Compute the total order and the tax
-            totalTaxOrder();
-        });
-
-        let delID, targetBtn;
-
-        $('#cartProd').on('click', '.delBtn', function () {
-            // Save the delID
-            delID = $(this).data("id");
-            targetBtn = $(this);
-        });
-
-        $('.removeProd').on('click', function () {
-            if (typeof delID === "undefined")
-                return; // Do not execute ajax when delID is not found
-
-            $.ajax({
-                url: 'includes/cart_function.php',
-                method: 'post',
-                data: {delID:delID},
-                success: function (data) {
-                    $('#delMsg').html(data);
-
-                    $(targetBtn).closest("tr").remove();
-                    countItem();
-
-                    // Delete the del ID after use
-                    delID = undefined;
-                    targetBtn = undefined;
-                }
-            });
-        })
-
-    });
+               }
+           })
+       });
+   })
 </script>
 <?php include "./footer.php"?>
