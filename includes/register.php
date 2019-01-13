@@ -9,12 +9,11 @@ session_start();
 @$address = $_POST['address'];
 @$contactNum = $_POST['contactNum'];
 @$type = 0;
-
-$query = mysqli_query($conn,"SELECT * FROM accounts WHERE usn ='$usn'");
+$query = mysqli_query($conn,"SELECT * FROM users WHERE usn ='$usn'");
 if(mysqli_num_rows($query) > 0){
     echo 'exist';
 } else {
-    $query = mysqli_query($conn,"INSERT INTO `accounts` (`fn`, `ln`, `address`, `contact_num`, `usn`, `pwd`, `type`) 
+    $query = mysqli_query($conn,"INSERT INTO `users` (`fn`, `ln`, `address`, `contact_num`, `usn`, `pwd`, `type`) 
                                         VALUES ('$firstName','$lastName','$address','$contactNum','$usn','$pwd','$type')");
     if ($query){
 
@@ -28,5 +27,7 @@ if(mysqli_num_rows($query) > 0){
         setcookie( "type", $type, time() + (10 * 365 * 24 * 60 * 60) );
         setcookie( "id", $id, time() + (10 * 365 * 24 * 60 * 60) );
 
+    } else {
+        echo $query;
     }
 }

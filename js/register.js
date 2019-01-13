@@ -15,8 +15,8 @@ $(document).ready(function () {
             return false;
         }
         // Checking length of username
-        if(usn.length < 6 || usn.length > 32){
-            error("Username must be 6-32 characters only.");
+        if(usn.length < 5 || usn.length > 32){
+            error("Username must be 5-32 characters only.");
             return false;
         }
         // Checking if username is a valid characters
@@ -26,7 +26,7 @@ $(document).ready(function () {
             return false;
         }
         // Checking length of password
-        if(pwd.length < 6 || pwd.length > 32){
+        if(pwd.length < 5 || pwd.length > 32){
             error("Password error.");
             return false;
         }
@@ -74,6 +74,7 @@ $(document).ready(function () {
             url: "includes/register.php?",
             data: data,
             success: function(data){
+                console.log(data);
                 if(data === 'exist'){
                     error("Username is already taken");
                 } else {

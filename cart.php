@@ -254,12 +254,10 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
                data: data,
                success: function (data) {
                    console.log(data);
-                   location.href = '../home.php?msg';
+                   location.href = '../checkout_msg.php';
                }
            })
        });
-
-
    })
 </script>
 <?php include "./footer.php"?>

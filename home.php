@@ -8,7 +8,6 @@ $loggedIn = true;
 if (!$_SESSION){
 $loggedIn = false;
 }
-
 ?>
 <title>Home</title>
 <link rel="stylesheet" href="css/home.css">

@@ -10,6 +10,10 @@ $sql = '';
 // add product in to cart
 if (isset($_POST['pID'])){
     $pID = $_POST['pID'];
+    @$qty = $_POST['qty'];
+    if (!isset($_POST['qty'])){
+        $qty = 1;
+    }
     // if user is loggedIn
     if (isset($uid)){
         $query = mysqli_query($conn,"SELECT * FROM cart WHERE prod_id = '$pID' AND user_id = '$uid'");
@@ -19,24 +23,22 @@ if (isset($_POST['pID'])){
             echo '<h6 class="text-warning">Product is already added in your cart...</h6>';
         } else {
             // Kapag nka login ang user session_id gagamiton ta pag insert
-            $sql = "INSERT INTO `cart`(`prod_id`,`ip_add`,`user_id`,`qty`) VALUES ('$pID','$ip_add','$uid',1)";
+            $sql = "INSERT INTO `cart`(`prod_id`,`ip_add`,`user_id`,`qty`) VALUES ('$pID',-1,'$uid','$qty')";
         }
     } else {
         $query = mysqli_query($conn,"SELECT * FROM cart WHERE prod_id = '$pID' AND ip_add = '$ip_add' AND `user_id` = '-1'");
         // If tig add nya na su product
         if (mysqli_num_rows($query) > 0){
-            // Kpag tig add nya na
             echo '<h6 class="text-warning">Product is already added in your cart...</h6>';
         } else {
-            // Kapag dae pa nka login esisave ta su data gamit ang ip_address
-            $sql = "INSERT INTO `cart`(`prod_id`,`ip_add`,`user_id`,`qty`) VALUES ('$pID','$ip_add',-1,1)";
+            $sql = "INSERT INTO `cart`(`prod_id`,`ip_add`,`user_id`,`qty`) VALUES ('$pID','$ip_add',-1,'$qty')";
         }
     }
     // Execute query
     if ($sql !== ''){
         $query = mysqli_query($conn, $sql);
         if ($query){
-            echo '<h5 class="text-success">Product is successfully added in your cart...</h5>';
+            echo '<h6 class="text-success">Product is successfully added in your cart...</h6>';
         } else {
             echo 'error';
         }
@@ -62,8 +64,8 @@ if (isset($_POST['getProd'])){
     $sql = '';
 
     if (isset($uid)){
-        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart  b
-                WHERE a.id = b.prod_id AND b.ip_add = '$ip_add' AND user_id = '$uid'";
+        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.prod_id,b.qty FROM product a,cart  b
+                WHERE a.id = b.prod_id AND b.ip_add = -1 AND user_id = '$uid'";
     } else {
         $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.prod_id,b.qty FROM product a,cart b
                 WHERE a.id=b.prod_id AND ip_add='$ip_add' AND user_id = -1";
@@ -165,6 +167,11 @@ if (isset($_POST['checkout'])){
                 $query = mysqli_query($conn, $sql);
                 if ($query){
                     // Update the cart and show message
+                    if ($uid){
+                        mysqli_query($conn, "DELETE FROM cart WHERE user_id = '$uid'");
+                    } else {
+                        mysqli_query($conn, "DELETE FROM cart WHERE ip_add = '$ip_add' AND user_id = -1");
+                    }
                 }
             }
 

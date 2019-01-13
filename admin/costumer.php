@@ -109,7 +109,7 @@ include "../includes/db.php";
                         </thead>
                         <tbody>
                             <?php
-                                $query = mysqli_query($conn,"SELECT * FROM `accounts` WHERE `type`= 0");
+                                $query = mysqli_query($conn,"SELECT * FROM `users` WHERE `type`= '0'");
                                 while ($row = mysqli_fetch_array($query)){
                                     echo '<tr>'.
                                             '<td>'.$row['id'].'</td>'.

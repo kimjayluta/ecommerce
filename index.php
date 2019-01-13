@@ -3,7 +3,13 @@ session_start();
 $loggedIn = true;
 if (!$_SESSION){
     $loggedIn = false;
+} else {
+    if($_SESSION['type'] == '1'){
+        header('location: admin/dashboard.php');
+    }
 }
+
+
 ?>
 
 <title>TheClothing Co.</title>

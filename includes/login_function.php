@@ -3,7 +3,7 @@ include_once 'db.php';
 session_start();
 @$usn = $_POST['usn'];
 @$pwd = $_POST['pwd'];
-$query = mysqli_query($conn,"SELECT * FROM accounts WHERE usn='$usn'");
+$query = mysqli_query($conn,"SELECT * FROM users WHERE usn='$usn'");
 $fetch = mysqli_fetch_array($query);
 
 if (mysqli_num_rows($query) > 0){
