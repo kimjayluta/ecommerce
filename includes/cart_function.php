@@ -153,22 +153,19 @@ if (isset($_POST['checkout'])){
             $qty[] = $row['qty'];
         }
 
-        $sql = "INSERT INTO orders(`cust_name`, `address`, `date_ord`,`cnum`,`total_ord`,`ord_stat`) 
+        $sql = "INSERT INTO orders_info(`cust_name`, `address`, `date_ord`,`cnum`,`total_ord`,`ord_stat`) 
                 VALUES ('$name','$address', NOW(),'$cnum','$totalOrder','pend')";
         $query = mysqli_query($conn,$sql);
-
+        $orderID = mysqli_insert_id($conn);
         if ($query){
 
             for ($i = 0; $i < count($prodID); $i++){
-                $orderID = mysqli_insert_id($conn);
-                $sql = "INSERT INTO order_info(`order_id`,`prod_id`,`prod_qty`,`strt`,`brgy`,`city`,`state`,`zipCode`,`pymnt_type`) 
-                        VALUES ('$orderID','$prodID[$i]','$qty[$i]','$strt','$brgy','$city','$state','$zipCode','cod');";
+                $sql = "INSERT INTO orders(`order_id`,`prod_id`,`qty`,`ord_stat`) 
+                        VALUES ('$orderID','$prodID[$i]','$qty[$i]','pend');";
                 $query = mysqli_query($conn, $sql);
-
-                if (!$query){
-
-                    echo $sql;
-            }
+                if ($query){
+                    // Update the cart and show message
+                }
             }
 
         } else {

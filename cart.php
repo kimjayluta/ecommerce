@@ -105,7 +105,7 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="city">City</label>
+                            <label for="city">City / Province </label>
                             <input type="text" class="form-control" id="city" required="required">
                         </div>
                         <div class="form-group col-md-4">
@@ -216,8 +216,12 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
 
            const name = $('#name').val();
            const cnum = $('#cnum').val();
-           const address = $('#strt').val() + ' street, Baranggay ' + $('#brgy').val() + ', ' + $('#city').val() + ' city, ' + $('#state').val()+
-                            ', ' + $('#zipCode').val();
+           const strt = $('#strt').val();
+           const brgy = $('#brgy').val();
+           const city = $('#city').val();
+           const zipCode = $('#zipCode').val();
+           const address = strt + ' street, Baranggay ' + brgy+ ', ' + city + ', ' + $('#state').val()+
+                            ', ' + zipCode;
 
            let totalOrder = $('#totalOrder').text();
            totalOrder = Number(totalOrder.split(" ")[1]);
@@ -250,7 +254,7 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
                data: data,
                success: function (data) {
                    console.log(data);
-//                   location.href = '../home.php?msg';
+                   location.href = '../home.php?msg';
                }
            })
        });
