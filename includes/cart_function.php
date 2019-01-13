@@ -65,7 +65,7 @@ if (isset($_POST['getProd'])){
         $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart  b
                 WHERE a.id = b.prod_id AND b.ip_add = '$ip_add' AND user_id = '$uid'";
     } else {
-        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.qty FROM product a,cart b
+        $sql = "SELECT a.id,a.name,a.price,a.prod_img,b.id,b.prod_id,b.qty FROM product a,cart b
                 WHERE a.id=b.prod_id AND ip_add='$ip_add' AND user_id = -1";
     }
     $query = mysqli_query($conn, $sql);
@@ -99,6 +99,7 @@ if (isset($_POST['getProd'])){
                     '<input type="text" name="total" value="₱ '.$row['price'] * $row['qty'] .'" class="totalBox total" 
                         disabled="disabled">'.
                 '</td>'.
+                '<input type="hidden" class="prodID" value="'.$row['prod_id'].'">'.
             '</tr>';
     }
 }
@@ -126,5 +127,56 @@ if(isset($_POST['delID'])){
     } else {
         echo $sql;
     }
+}
 
+// Checkout function
+if (isset($_POST['checkout'])){
+
+    $name = $_POST['name'];
+    $cnum = $_POST['cnum'];
+    $address = $_POST['address'];
+
+    $totalOrder = $_POST['totalOrder'];
+
+    if (isset($uid)){
+        $sql = "SELECT * FROM cart WHERE user_id = '$uid'";
+    } else {
+        $sql = "SELECT * FROM cart WHERE ip_add = '$ip_add' AND user_id = -1";
+    }
+
+    $query = mysqli_query($conn,$sql);
+    if (mysqli_num_rows($query) > 0){
+        $prodID = [];
+        $qty = [];
+        while ($row = mysqli_fetch_array($query)){
+            $prodID[] = $row['prod_id'];
+            $qty[] = $row['qty'];
+        }
+
+        $sql = "INSERT INTO orders(`cust_name`, `address`, `date_ord`,`cnum`,`total_ord`,`ord_stat`) 
+                VALUES ('$name','$address', NOW(),'$cnum','$totalOrder','pend')";
+        $query = mysqli_query($conn,$sql);
+
+        if ($query){
+
+            for ($i = 0; $i < count($prodID); $i++){
+                $orderID = mysqli_insert_id($conn);
+                $sql = "INSERT INTO order_info(`order_id`,`prod_id`,`prod_qty`,`strt`,`brgy`,`city`,`state`,`zipCode`,`pymnt_type`) 
+                        VALUES ('$orderID','$prodID[$i]','$qty[$i]','$strt','$brgy','$city','$state','$zipCode','cod');";
+                $query = mysqli_query($conn, $sql);
+
+                if (!$query){
+
+                    echo $sql;
+            }
+            }
+
+        } else {
+
+            echo $sql;
+        }
+    } else {
+
+        echo $sql;
+    }
 }

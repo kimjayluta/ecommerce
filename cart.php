@@ -82,34 +82,35 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
                 </table>
                 <form id="formCheckout" style="display: none">
                     <h5>Billing information: </h5>
+                    <div id="error"></div>
                     <div class="form-row">
                         <div class="form-group col-md-7">
                             <label for="name">Name: <span class="text-danger">NOTE: Full name</span></label>
-                            <input type="text" class="form-control" id="name">
+                            <input type="text" class="form-control" id="name"  required="required">
                         </div>
                         <div class="form-group col-md-5">
                             <label for="inputPassword4">Contact Number: </label>
-                            <input type="number" class="form-control" id="cnum">
+                            <input type="number" class="form-control" id="cnum" required="required">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-5">
                             <label for="strt">Street: </label>
-                            <input type="text" class="form-control" id="strt">
+                            <input type="text" class="form-control" id="strt" required="required">
                         </div>
                         <div class="form-group col-md-7">
                             <label for="brgy">Baranggay: </label>
-                            <input type="text" class="form-control" id="brgy">
+                            <input type="text" class="form-control" id="brgy" required="required">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="city">City</label>
-                            <input type="text" class="form-control" id="city">
+                            <input type="text" class="form-control" id="city" required="required">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="state">State</label>
-                            <select id="state" class="form-control">
+                            <select id="state" class="form-control" required="required">
                                 <option selected>Choose...</option>
                                 <?php
                                 foreach ($listOfCity as $city){
@@ -120,7 +121,7 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
                         </div>
                         <div class="form-group col-md-2">
                             <label for="zipCode">Zip</label>
-                            <input type="text" class="form-control" id="zipCode">
+                            <input type="text" class="form-control" id="zipCode" required="required">
                         </div>
                     </div>
                     <div class="form-row">
@@ -192,6 +193,16 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
 <script type="text/javascript" src="js/cart.js"></script>
 <script>
    $(document).ready(function () {
+
+       function error(msg) {
+           return $("#error").html(
+               '<div class="alert alert-danger alert-dismissible fade show" role="alert">'+
+                   '<h6><strong>Error!</strong> '+ msg +'</h6>'+
+                   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+                     '<span aria-hidden="true">&times;</span>'+
+                   '</button>'+
+               '</div>')
+       }
        
        $('#checkout').on('click', function () {
            $('#prodTable').hide();
@@ -205,24 +216,46 @@ $listOfCity = array( 'Metro manila','Abra','Agusan Del Norte','Agusan Del Sur','
 
            const name = $('#name').val();
            const cnum = $('#cnum').val();
-           const strt = $('#strt').val();
-           const brgy = $('#brgy').val();
-           const city = $('#city').val();
-           const state = $('#state').val();
-           const zipCode = $('#zipCode').val();
-           const data = "name="+ name +"&cnum="+ cnum +"&strt="+ strt +"&brgy="+ brgy + "&city="+ city +
-                        "&state="+ state + "&zipCode" + zipCode;
-           console.log(data);
+           const address = $('#strt').val() + ' street, Baranggay ' + $('#brgy').val() + ', ' + $('#city').val() + ' city, ' + $('#state').val()+
+                            ', ' + $('#zipCode').val();
 
+           let totalOrder = $('#totalOrder').text();
+           totalOrder = Number(totalOrder.split(" ")[1]);
+
+           if(name === '' || cnum === '' || strt === '' || brgy === '' || city === '' || zipCode === ''){
+               error('Required all fields');
+               return false;
+           }
+           //Checking the length of contact number
+           if(cnum.length < 5 || cnum.length > 13){
+               error("Contact number is invalid.");
+               return false
+           }
+
+           if(!cnum.match(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g)){
+               error("Contact number is invalid.");
+               return false;
+           }
+           //zip code validation
+           if(zipCode.length !== 4){
+               error("Zip code is invalid.");
+               return false;
+           }
+
+
+           const data = "name="+ name +"&cnum="+ cnum +"&address="+ address + "&totalOrder=" + totalOrder + "&checkout=" + 1;
            $.ajax({
                url: 'includes/cart_function.php',
                method: 'post',
                data: data,
-               success: function () {
-                   location.href("home.php?msg");
+               success: function (data) {
+                   console.log(data);
+//                   location.href = '../home.php?msg';
                }
            })
        });
+
+
    })
 </script>
 <?php include "./footer.php"?>
