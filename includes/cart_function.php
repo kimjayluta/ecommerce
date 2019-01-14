@@ -113,7 +113,7 @@ if(isset($_POST['delID'])){
     $delID = $_POST['delID'];
 
     if (isset($uid)){
-        $sql = "DELETE FROM cart WHERE id = '$delID' AND user_id = '$uid' AND ip_add = '$ip_add'";
+        $sql = "DELETE FROM cart WHERE id = '$delID' AND user_id = '$uid' AND ip_add = -1";
     } else {
         $sql = "DELETE FROM cart WHERE id ='$delID' AND ip_add = '$ip_add' AND user_id = -1";
     }
