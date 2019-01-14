@@ -1,6 +1,13 @@
 <?php
-if (!isset($_SESSION) || $_SESSION['type'] == 0){
-    header('location: ../index.php');
+session_start();
+if (!$_SESSION){
+    header('location: /index.php');
+    exit;
+} else {
+    if($_SESSION['type'] == '0'){
+        header('location: /index.php');
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>

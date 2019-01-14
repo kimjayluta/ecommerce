@@ -1,4 +1,4 @@
-<?php include "header.php";?>
+<?php include "header.php"; ?>
 <title>Dashboard</title>
 <div class="wrapper">
     <!-- Sidebar  -->

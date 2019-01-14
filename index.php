@@ -9,7 +9,6 @@ if (!$_SESSION){
     }
 }
 
-
 ?>
 
 <title>TheClothing Co.</title>
