@@ -1,4 +1,7 @@
-<?php include "header.php"; ?>
+<?php
+include "header.php";
+$usn = $_SESSION['usn'];
+?>
 <title>Dashboard</title>
 <div class="wrapper">
     <!-- Sidebar  -->
@@ -73,7 +76,7 @@
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">
-                                Hi, <span> Kim Jay</span>
+                                Hi, <span> <?php echo $usn;?></span>
                                 <i class="fas fa-user-circle fa-lg"></i>
                             </a>
                         </li>
@@ -95,7 +98,7 @@
                                </div>
                                <div class="col-10" style="text-align: right">
                                    <h6 class="text-muted">Revenue</h6>
-                                   <h5>$ 1,345</h5>
+                                   <h5>&#8369; 1,345</h5>
                                </div>
                            </div>
                        </div>

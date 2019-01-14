@@ -1,4 +1,7 @@
-<?php include "header.php";?>
+<?php
+include "header.php";
+include "../includes/db.php";
+?>
 <title>Order Reports</title>
 <div class="wrapper">
     <!-- Sidebar  -->
@@ -94,14 +97,14 @@
                         </div>
                         <div class="col" style="text-align: right">
                             <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                                <button class="dropdown-toggle" type="button" id="dropdownMenuButton"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-4">View by</span>
+                                    <span class="mr-4">Filter by</span>
                                 </button>
                                 <div class="dropdown-menu mr-4" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Completed</a>
-                                    <a class="dropdown-item" href="#">Processing</a>
-                                    <a class="dropdown-item" href="#">Canceled</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" id="pending">Pending</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" id="complete">Completed</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" id="cancel">Canceled</a>
                                 </div>
                             </div>
                         </div>
@@ -121,26 +124,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Order #01</td>
-                                <td>@kimjayluta</td>
-                                <td>12/17/18</td>
-                                <td>09755197836</td>
-                                <td>1,000</td>
-                                <td>
-                                    <span style="display: inline;">
-                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                                data-target="#checkModal">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#cancelModal">
-                                            <i class="fas fa-ban"></i>
-                                        </button>
-                                    </span>
-                                </td>
-                            </tr>
+                            <?php
+                                $query = mysqli_query($conn,"SELECT * FROM orders_info WHERE ord_stat = 'pend'");
+                                $num = 1;
+                                while($row = mysqli_fetch_array($query)){
+                                    echo
+                                    '<tr>
+                                        <th scope="row">'.$num++.'</th>
+                                        <td>'.$row['id'].'</td>
+                                        <td>'.$row['cust_name'].'</td>
+                                        <td>'.$row['date_ord'].'</td>
+                                        <td>'.$row['cnum'].'</td>
+                                        <td>&#8369;  '.$row['total_ord'].'</td>
+                                        <td>
+                                            <span style="display: inline;">
+                                                <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" 
+                                                        data-placement="top" title="Complete">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                                        data-placement="top" title="Cancel">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </span>
+                                        </td>
+                                    </tr>';
+                                }
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -190,8 +200,11 @@
 </div>
 <script>
     $(document).ready(function () {
+        // Data-table
         $('#order_table').DataTable();
+
+        // Filter function
+
     });
 </script>
-
 <?php include "footer.php";?>
