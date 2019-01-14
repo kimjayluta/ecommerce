@@ -86,20 +86,19 @@ include "../includes/db.php";
                 </div>
             </div>
         </nav>
-
         <!--Content here-->
         <div class="container">
             <div class="card cd">
                 <div class="card-header pb-0 pt-3" style="background-color: transparent;border: 0;">
                     <div class="row">
                         <div class="col">
-                            <h3 >Pending orders</h3>
+                            <h3 id="order_title">Pending orders</h3>
                         </div>
                         <div class="col" style="text-align: right">
                             <div class="dropdown">
-                                <button class="dropdown-toggle" type="button" id="dropdownMenuButton"
+                                <button class="btn btn-dark  dropdown-toggle" type="button" id="dropdownMenuButton"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-4">Filter by</span>
+                                    <span class="mr-4"><i class="fas fa-filter"></i></span>
                                 </button>
                                 <div class="dropdown-menu mr-4" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="javascript:void(0)" id="pending">Pending</a>
@@ -111,6 +110,9 @@ include "../includes/db.php";
                     </div>
                 </div>
                 <div class="card-body">
+                    <div id="msg">
+
+                    </div>
                     <table class="table" id="order_table">
                         <thead>
                             <tr class="table-info">
@@ -124,7 +126,6 @@ include "../includes/db.php";
                             </tr>
                         </thead>
                         <tbody id="orderTable">
-
                         </tbody>
                     </table>
                 </div>
@@ -143,6 +144,7 @@ include "../includes/db.php";
                 data: {pend:1,getOrder:1},
                 success: function (data) {
                     $('#orderTable').html(data);
+                    $('#order_title').text('Pending orders');
                 }
             })
         }
@@ -150,10 +152,10 @@ include "../includes/db.php";
         // Data-table
         $('#order_table').DataTable();
 
+        // Get order by pending category
         getPendingOrder();
 
         // Filter function
-
         $('#pending').on('click', function () {
             getPendingOrder();
         });
@@ -165,6 +167,7 @@ include "../includes/db.php";
                 data: {comp:1,getOrder:1},
                 success: function (data) {
                     $('#orderTable').html(data);
+                    $('#order_title').text('Complete orders');
                 }
             })
         });
@@ -175,11 +178,40 @@ include "../includes/db.php";
                 method: 'post',
                 data: {canc:1,getOrder:1},
                 success: function (data) {
+
                     $('#orderTable').html(data);
+                    $('#order_title').text('Canceled orders');
                 }
             })
         });
 
+        // Complete function
+        $('#orderTable').on('click','.compBtn', function () {
+            const order_id = $(this).parents('tr').find('.order_id').data('id');
+            $.ajax({
+                url: 'includes/orderpage_func.php',
+                method: 'post',
+                data:{approve:1,order_id:order_id},
+                success: function (data) {
+
+                    getPendingOrder();
+                    $('#msg').html(data);
+                }
+            })
+        });
+
+        $('#orderTable').on('click','.cancBtn', function () {
+            const order_id = $(this).parents('tr').find('.order_id').data('id');
+            $.ajax({
+                url: 'includes/orderpage_func.php',
+                method: 'post',
+                data:{cancel:1,order_id:order_id},
+                success: function (data) {
+                    getPendingOrder();
+                    $('#msg').html(data);
+                }
+            })
+        })
     });
 </script>
 <?php include "footer.php";?>
