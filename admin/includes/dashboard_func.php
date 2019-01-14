@@ -31,3 +31,13 @@ if (isset($_POST['countCustomer'])){
     echo $count_of_customer;
     exit;
 }
+
+if (isset($_POST['countRevenue'])){
+    $sql = "SELECT SUM(total_ord) FROM orders_info";
+    $query = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_array($query);
+    $count_of_revenue = $row[0];
+
+    echo $count_of_revenue;
+    exit;
+}

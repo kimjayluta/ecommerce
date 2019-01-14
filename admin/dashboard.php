@@ -99,7 +99,9 @@ $usn = $_SESSION['usn'];
                                </div>
                                <div class="col-10" style="text-align: right">
                                    <h6 class="text-muted">Revenue</h6>
-                                   <h5>&#8369; 1,345</h5>
+                                   <div id="revenue_count">
+
+                                   </div>
                                </div>
                            </div>
                        </div>
@@ -231,9 +233,22 @@ $usn = $_SESSION['usn'];
             })
         }
 
+        function count_revenue(){
+            $.ajax({
+                url: 'includes/dashboard_func.php',
+                method: 'post',
+                data: {countRevenue:1},
+                success: function (data) {
+                    console.log(data);
+                    $('#revenue_count').html('<h5> &#8369; '+ data + '</h5>');
+                }
+            })
+        }
+
         count_order();
         count_product();
         count_customer();
+        count_revenue()
     })
 </script>
 <!-- Chart Cdn -->
