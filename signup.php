@@ -103,7 +103,7 @@ if (!$_SESSION){
         </div>
     </div>
 </section>
-<script type="text/javascript" src="js/register.js"></script>
+<script type="text/javascript" src="js/account.js"></script>
 <script type="text/javascript" src="js/count_prod.js"></script>
 
 <?php include "./footer.php"?>

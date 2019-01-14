@@ -1,12 +1,6 @@
 <?php
 include "./header.php";
-include "./includes/db.php";
 include "./navbar.php";
-$loggedIn = false;
-// Kung nakalogin ang user
-if ($_SESSION){
-    $loggedIn = true;
-}
 ?>
 <title>Cart</title>
 <style>

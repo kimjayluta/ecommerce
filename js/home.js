@@ -1,5 +1,4 @@
 $(document).ready( function () {
-
     // Get * product
     getProd();
     // count item in the cart
@@ -19,8 +18,6 @@ $(document).ready( function () {
             }
         });
     });
-
-
 
     // Get product by selected category
     $('.list').on('click',function () {
@@ -51,7 +48,6 @@ $(document).ready( function () {
             }
         })
     }
-
 
     // Counting the product in the cart
     function countItem() {

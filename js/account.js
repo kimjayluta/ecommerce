@@ -1,4 +1,14 @@
 $(document).ready(function () {
+    function error(msg) {
+        return $("#error").html(
+            '<div class="alert alert-danger alert-dismissible fade show" role="alert">'+
+            '<h6><strong>Error!</strong> '+ msg +'</h6>'+
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+            '<span aria-hidden="true">&times;</span>'+
+            '</button>'+
+            '</div>')
+    }
+    // Register function
     $('#form-register').on("submit", function () {
         let usn  = $('#username').val();
         let pwd  = $('#password').val();
@@ -8,7 +18,7 @@ $(document).ready(function () {
         let address   = $('#address').val();
         let contactNum   = $('#contactNum').val();
         let data = "usn="+ usn + "&pwd=" + pwd + "&cpwd=" + cpwd + "&firstName=" + firstName+ "&lastName="
-            + lastName+ "&address=" + address + "&contactNum=" + contactNum;
+            + lastName+ "&address=" + address + "&contactNum=" + contactNum + "&register=" + 1;
         // Checking all fields if there's empty value
         if(usn === '' || pwd === '' || cpwd === '' || firstName === '' || lastName === '' || address === '' || contactNum === ''){
             error("Please fill up all fields.");
@@ -71,7 +81,7 @@ $(document).ready(function () {
         }
         $.ajax({
             method: "post",
-            url: "includes/register.php?",
+            url: "includes/account_function.php?",
             data: data,
             success: function(data){
                 console.log(data);
@@ -84,14 +94,25 @@ $(document).ready(function () {
         });
         return false;
     });
-
-    function error(msg) {
-        return $("#error").html(
-            '<div class="alert alert-danger alert-dismissible fade show" role="alert">'+
-                '<h6><strong>Error!</strong> '+ msg +'</h6>'+
-                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-                    '<span aria-hidden="true">&times;</span>'+
-                '</button>'+
-            '</div>')
-    }
+    // Login function
+    $('#loginForm').on('submit', function () {
+        let usn = $('#username').val();
+        let pwd = $('#password').val();
+        let data = "usn=" + usn + "&pwd="+ pwd + "&login=" + 1;
+        $.ajax({
+            method:'post',
+            url: 'includes/account_function.php',
+            data: data,
+            success: function (data) {
+                if(data === 'usn'){
+                   error('You\'re username is incorrect.');
+                } else if (data === 'pwd'){
+                    error('You\'re password is incorrect.');
+                } else {
+                    location.href = '../home.php';
+                }
+            }
+        });
+        return false;
+    });
 });

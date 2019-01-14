@@ -53,7 +53,7 @@ if (!$_SESSION){
                                   </a>';
                             echo '<div class="dropdown-divider"></div>';
                             echo '<a class="dropdown-item" href="#">Account settings</a>';
-                            echo '<a class="dropdown-item" href="includes/logout.php?logout">Sign out</a>';
+                            echo '<a class="dropdown-item" href="includes/account_function.php?logout">Sign out</a>';
                         }
                         ?>
                     </div>

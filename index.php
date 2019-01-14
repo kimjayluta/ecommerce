@@ -70,7 +70,7 @@ if (!$_SESSION){
                                 <h6 class="m-0">Hi, '.$_SESSION['usn'].'</h6>
                               </a>';
                         echo '<a class="dropdown-item txtColor" href="#">Account settings</a>';
-                        echo '<a class="dropdown-item txtColor" href="includes/logout.php?logout">Sign out</a>';
+                        echo '<a class="dropdown-item txtColor" href="includes/account_function.php?logout">Sign out</a>';
                     }
                     ?>
 

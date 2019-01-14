@@ -53,7 +53,7 @@
                         <a href="#">My Profile</a>
                     </li>
                     <li>
-                        <a href="#">Sign out</a>
+                        <a href="../includes/account_function.php?logout">Sign out</a>
                     </li>
                 </ul>
             </li>
@@ -159,7 +159,7 @@
                             </div>
                         </div>
                         <div class="card-footer" style="text-align: center;background-color: transparent">
-                            <p class="text-muted">Registered Costumers</p>
+                            <p class="text-muted">Costumers</p>
                         </div>
                     </div>
                 </div>

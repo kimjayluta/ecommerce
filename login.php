@@ -82,7 +82,7 @@ if ($_SESSION){
        </div>
     </div>
 </section>
-<script src="js/login.js"></script>
+<script src="js/account.js"></script>
 <script type="text/javascript" src="js/count_prod.js"></script>
 
 <?php include "./footer.php"?>
