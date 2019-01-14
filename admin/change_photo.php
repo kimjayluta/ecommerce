@@ -66,7 +66,7 @@ function printer($data){
                         <a href="#">My Profile</a>
                     </li>
                     <li>
-                        <a href="#">Sign out</a>
+                        <a href="../includes/account_function.php?logout">Sign out</a>
                     </li>
                 </ul>
             </li>

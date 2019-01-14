@@ -3,13 +3,13 @@ include_once 'db.php';
 $sql = '';
 // Get all the product
 if (isset($_POST['getProduct'])){
-    $sql = "SELECT * FROM `product`";
+    $sql = "SELECT * FROM `product` ORDER BY date_added DESC";
 }
 
 // Get the product by categorie
 if (isset($_POST['cid'])){
     $catID = $_POST['cid'];
-    $sql = "SELECT * FROM `product` WHERE `prod_cat`='$catID'";
+    $sql = "SELECT * FROM `product` WHERE `prod_cat`='$catID' ORDER BY date_added DESC";
 }
 
 // Output the data
