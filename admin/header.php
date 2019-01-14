@@ -22,7 +22,6 @@
     <script src="../js/jquery-3.3.1.min.js"></script>
     <!--Datatable Jquery-->
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
-
 </head>
 <body style="font-family: 'Montserrat',sans-serif;">
 

@@ -43,6 +43,7 @@ if (isset($_POST['pID'])){
             echo 'error';
         }
     }
+
 }
 
 // Counting the product in the cart

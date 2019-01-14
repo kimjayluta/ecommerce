@@ -1,6 +1,3 @@
-/**
- * Created by HPelitebook2760p on 1/10/2019.
- */
 $(document).ready(function () {
     countItem();
 

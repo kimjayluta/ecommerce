@@ -84,7 +84,7 @@ if (isset($_GET['id'])){
                                 <input type='button' value="+" class="qtyPlus buton" style="background-color: white">
                             </form>
                             <!-- Button add to cart -->
-                            <a href="#" class="btn mt-3 addBtn btn-dark"> ADD TO CART</a>
+                            <a href="#" class="btn mt-3 addBtn btn-dark" data-id="<?php echo $row['id'];?>"> ADD TO CART</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,63 @@ if (isset($_GET['id'])){
         </div>
     </div>
 </section>
-<script type="text/javascript" src="js/prod_info.js"></script>
-<script type="text/javascript" src="js/count_prod.js"></script>
 
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="msg">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/prod_info.js"></script>
+<script>
+$(document).ready(function () {
+    // Counting the product in the cart
+    function countItem() {
+        $.ajax({
+            url: 'includes/cart_function.php',
+            method: 'post',
+            data: {count:1},
+            success: function (data) {
+                if(data > 0){
+                    $('.badge').show();
+                    $('.badge').html(data);
+                } else {
+                    $('.badge').hide();
+                }
+            }
+        })
+    }
+    // Adding product into the cart
+    $('.addBtn').on('click', function () {
+        const pID = $(this).data("id");
+        const qty = $('#qty').val();
+        $.ajax({
+            url: 'includes/cart_function.php',
+            method: 'post',
+            data: {pID:pID,qty:qty},
+            success: function (data) {
+                $('#msg').html(data);
+                $('.modal').modal('show');
+                countItem();
+            }
+        })
+    });
+})
+
+</script>
+<script type="text/javascript" src="js/count_prod.js"></script>
 <?php include "./footer.php"?>
