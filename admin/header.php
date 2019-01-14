@@ -1,3 +1,8 @@
+<?php
+if (!isset($_SESSION) || $_SESSION['type'] == 0){
+    header('location: ../index.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
