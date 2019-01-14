@@ -123,34 +123,8 @@ include "../includes/db.php";
                                 <th scope="col">Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php
-                                $query = mysqli_query($conn,"SELECT * FROM orders_info WHERE ord_stat = 'pend'");
-                                $num = 1;
-                                while($row = mysqli_fetch_array($query)){
-                                    echo
-                                    '<tr>
-                                        <th scope="row">'.$num++.'</th>
-                                        <td>'.$row['id'].'</td>
-                                        <td>'.$row['cust_name'].'</td>
-                                        <td>'.$row['date_ord'].'</td>
-                                        <td>'.$row['cnum'].'</td>
-                                        <td>&#8369;  '.$row['total_ord'].'</td>
-                                        <td>
-                                            <span style="display: inline;">
-                                                <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" 
-                                                        data-placement="top" title="Complete">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip"
-                                                        data-placement="top" title="Cancel">
-                                                    <i class="fas fa-ban"></i>
-                                                </button>
-                                            </span>
-                                        </td>
-                                    </tr>';
-                                }
-                            ?>
+                        <tbody id="orderTable">
+
                         </tbody>
                     </table>
                 </div>
@@ -158,52 +132,53 @@ include "../includes/db.php";
         </div>
     </div>
 </div>
-<!--Check Modal -->
-<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Complete order: </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure this order is already completed ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Yes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Cancel modal -->
-<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cancel order:</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure to cancel this order ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Yes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     $(document).ready(function () {
+
+        // Filter function
+        function getPendingOrder() {
+            $.ajax({
+                url: 'includes/orderpage_func.php',
+                method: 'post',
+                data: {pend:1,getOrder:1},
+                success: function (data) {
+                    $('#orderTable').html(data);
+                }
+            })
+        }
+
         // Data-table
         $('#order_table').DataTable();
 
+        getPendingOrder();
+
         // Filter function
+
+        $('#pending').on('click', function () {
+            getPendingOrder();
+        });
+
+        $('#complete').on('click', function () {
+            $.ajax({
+                url: 'includes/orderpage_func.php',
+                method: 'post',
+                data: {comp:1,getOrder:1},
+                success: function (data) {
+                    $('#orderTable').html(data);
+                }
+            })
+        });
+
+        $('#cancel').on('click', function () {
+            $.ajax({
+                url: 'includes/orderpage_func.php',
+                method: 'post',
+                data: {canc:1,getOrder:1},
+                success: function (data) {
+                    $('#orderTable').html(data);
+                }
+            })
+        });
 
     });
 </script>
