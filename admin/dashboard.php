@@ -1,6 +1,7 @@
 <?php
 include "header.php";
 $usn = $_SESSION['usn'];
+
 ?>
 <title>Dashboard</title>
 <div class="wrapper">
@@ -107,6 +108,7 @@ $usn = $_SESSION['usn'];
                         </div>
                     </div>
                 </div>
+
                 <!-- Orders -->
                 <div class="col">
                     <div class="card cd">
@@ -117,7 +119,9 @@ $usn = $_SESSION['usn'];
                                 </div>
                                 <div class="col-10" style="text-align: right">
                                     <h6 class="text-muted">Orders</h6>
-                                    <h5>50</h5>
+                                    <div id="order_count">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +141,9 @@ $usn = $_SESSION['usn'];
                                 </div>
                                 <div class="col-10" style="text-align: right">
                                     <h6 class="text-muted" >Products</h6>
-                                    <h5>100</h5>
+                                    <div id="product_count">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,12 +163,14 @@ $usn = $_SESSION['usn'];
                                 </div>
                                 <div class="col-10" style="text-align: right">
                                     <h6 class="text-muted">Costumers</h6>
-                                    <h5>400</h5>
+                                    <div id="customer_count">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer" style="text-align: center;background-color: transparent">
-                            <p class="text-muted">Costumers</p>
+                            <p class="text-muted">Registered customer</p>
                         </div>
                     </div>
                 </div>
@@ -187,7 +195,47 @@ $usn = $_SESSION['usn'];
         </div>
 
     </div>
-</div>
+</div>]
+<script>
+    $(document).ready(function () {
+        function count_order(){
+            $.ajax({
+                url: 'includes/dashboard_func.php',
+                method: 'post',
+                data: {countOrder:1},
+                success: function (data) {
+                    $('#order_count').html('<h5>'+ data + '</h5>');
+                }
+            })
+        }
+
+        function count_product(){
+            $.ajax({
+                url: 'includes/dashboard_func.php',
+                method: 'post',
+                data: {countProduct:1},
+                success: function (data) {
+                    $('#product_count').html('<h5>'+ data + '</h5>');
+                }
+            })
+        }
+
+        function count_customer(){
+            $.ajax({
+                url: 'includes/dashboard_func.php',
+                method: 'post',
+                data: {countCustomer:1},
+                success: function (data) {
+                    $('#customer_count').html('<h5>'+ data + '</h5>');
+                }
+            })
+        }
+
+        count_order();
+        count_product();
+        count_customer();
+    })
+</script>
 <!-- Chart Cdn -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <!-- Chart Js -->
