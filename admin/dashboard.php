@@ -1,5 +1,6 @@
 <?php
 include "header.php";
+include "../includes/db.php";
 $usn = $_SESSION['usn'];
 
 ?>
@@ -179,25 +180,19 @@ $usn = $_SESSION['usn'];
             </div>
         </div>
         <!--Charts-->
-        <div class="container mt-5">
+        <div class="container mt-5 mb-5">
             <div class="row">
-                <div class="col-8 ">
+                <div class="col">
                     <!-- Line graph -->
                     <div class="card cd p-4">
                         <canvas id="lineGraph"></canvas>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <!-- Pie graph -->
-                    <div class="card cd p-4 pt-5" style="height: 100%;">
-                        <canvas id="pieGraph"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-</div>]
+</div>
 <script>
     $(document).ready(function () {
         function count_order(){
@@ -239,7 +234,6 @@ $usn = $_SESSION['usn'];
                 method: 'post',
                 data: {countRevenue:1},
                 success: function (data) {
-                    console.log(data);
                     $('#revenue_count').html('<h5> &#8369; '+ data + '</h5>');
                 }
             })
@@ -248,10 +242,9 @@ $usn = $_SESSION['usn'];
         count_order();
         count_product();
         count_customer();
-        count_revenue()
+        count_revenue();
     })
 </script>
-<!-- Chart Cdn -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <!-- Chart Js -->
 <script src="js/chart.js"></script>

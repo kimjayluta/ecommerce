@@ -46,7 +46,7 @@ include "./navbar.php";
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">Order successfully done!</h4>
                 <p>Aww yeah, Thank you for shopping with <strong> TheClothing Co.</strong>
-                your order will be ship to you immediately! hope you love your new products, Thank you very much</p>
+                your order will be ship to you immediately, hope you love your new products.</p>
                 <hr>
                 <p class="mb-0">Thank you very much <a href="home.php">continue Shopping . . .</a></p>
             </div>

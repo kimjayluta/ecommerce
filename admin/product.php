@@ -108,7 +108,7 @@ if (isset($_GET['delID'])){
             </div>
         </nav>
         <!--Content here-->
-        <div class="container">
+        <div class="container mb-5">
             <div class="card cd">
                 <div class="card-header pb-0 pt-3" style="background-color: transparent;border: 0;">
                     <div class="row">
