@@ -2,7 +2,6 @@
 include "header.php";
 include "../includes/db.php";
 $usn = $_SESSION['usn'];
-
 ?>
 <title>Dashboard</title>
 <div class="wrapper">
