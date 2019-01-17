@@ -96,7 +96,7 @@ include "../includes/db.php";
                         </div>
                         <div class="col" style="text-align: right">
                             <button type="button" class="btn btn-primary mr-1" data-toggle="modal" data-target="#addModal"
-                            style="border-radius: 20px;">
+                            style="border-radius: 20px;" data-placement="top" title="Add category" data-toggle="tooltip">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -130,11 +130,11 @@ include "../includes/db.php";
                                              }
                                         echo '<td style="text-align: center">'.
                                              '<button data-id="'.$row['id'].'" type="button" class="btn btn-info btn-sm editBtn mr-1" 
-                                                    data-toggle="modal" data-target="#addModal">'.
+                                                    data-toggle="modal" data-toggle="tooltip" data-target="#addModal" data-placement="top" title="Edit">'.
                                              '<i class="fas fa-pen"></i>'.
                                              '</button>'.
                                              '<button data-id="'.$row['id'].'" type="button" class="btn btn-danger btn-sm deleteBtn" 
-                                                    data-toggle="modal" data-target="#deleteModal">'.
+                                                    data-toggle="modal" data-target="#deleteModal" data-placement="top" title="Delete" data-toggle="tooltip" >'.
                                              '<i class="far fa-trash-alt"></i>'.
                                              '</button>'.
                                              '</td>'.

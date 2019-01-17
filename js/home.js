@@ -1,4 +1,33 @@
 $(document).ready( function () {
+    // Function to get * product
+    function getProd() {
+        $.ajax({
+            url	:"includes/homepage_function.php",
+            method:	"POST",
+            data	:	{getProduct:1},
+            success	:	function(data){
+                $("#get_product").html(data);
+            }
+        })
+    }
+
+    // Counting the product in the cart
+    function countItem() {
+        $.ajax({
+            url: 'includes/cart_function.php',
+            method: 'post',
+            data: {count:1},
+            success: function (data) {
+                if(data > 0){
+                    $('.badge').show();
+                    $('.badge').html(data);
+                } else {
+                    $('.badge').hide();
+                }
+            }
+        })
+    }
+
     // Get * product
     getProd();
     // count item in the cart
@@ -37,34 +66,7 @@ $(document).ready( function () {
         });
     });
 
-    // Function to get * product
-    function getProd() {
-        $.ajax({
-            url	:"includes/homepage_function.php",
-            method:	"POST",
-            data	:	{getProduct:1},
-            success	:	function(data){
-                $("#get_product").html(data);
-            }
-        })
-    }
 
-    // Counting the product in the cart
-    function countItem() {
-        $.ajax({
-            url: 'includes/cart_function.php',
-            method: 'post',
-            data: {count:1},
-            success: function (data) {
-                if(data > 0){
-                    $('.badge').show();
-                    $('.badge').html(data);
-                } else {
-                    $('.badge').hide();
-                }
-            }
-        })
-    }
 
     // Function for hover effect in category
     $(".item").hover(

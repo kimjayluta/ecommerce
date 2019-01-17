@@ -142,8 +142,8 @@ function printer($data){
                         </div>
                         <div class="col">
                             <div class="dropdown">
-                                <div class="dropdown-toggle" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                                     aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-cog " id="icon"></i>
                                 </div>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-right: 30px!important;">

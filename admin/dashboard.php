@@ -192,59 +192,7 @@ $usn = $_SESSION['usn'];
 
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        function count_order(){
-            $.ajax({
-                url: 'includes/dashboard_func.php',
-                method: 'post',
-                data: {countOrder:1},
-                success: function (data) {
-                    $('#order_count').html('<h5>'+ data + '</h5>');
-                }
-            })
-        }
-
-        function count_product(){
-            $.ajax({
-                url: 'includes/dashboard_func.php',
-                method: 'post',
-                data: {countProduct:1},
-                success: function (data) {
-                    $('#product_count').html('<h5>'+ data + '</h5>');
-                }
-            })
-        }
-
-        function count_customer(){
-            $.ajax({
-                url: 'includes/dashboard_func.php',
-                method: 'post',
-                data: {countCustomer:1},
-                success: function (data) {
-                    $('#customer_count').html('<h5>'+ data + '</h5>');
-                }
-            })
-        }
-
-        function count_revenue(){
-            $.ajax({
-                url: 'includes/dashboard_func.php',
-                method: 'post',
-                data: {countRevenue:1},
-                success: function (data) {
-                    $('#revenue_count').html('<h5> &#8369; '+ data + '</h5>');
-                }
-            })
-        }
-
-        count_order();
-        count_product();
-        count_customer();
-        count_revenue();
-    })
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <!-- Chart Js -->
-<script src="js/chart.js"></script>
+<script src="js/dashboard_func.js"></script>
 <?php include "footer.php";?>

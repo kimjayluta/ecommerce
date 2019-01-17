@@ -116,7 +116,8 @@ if (isset($_GET['delID'])){
                             <h3>Product List</h3>
                         </div>
                         <div class="col" style="text-align: right">
-                            <a href="add_prod.php" class="btn btn-primary mr-1" style="border-radius: 20px">
+                            <a href="add_prod.php" class="btn btn-primary mr-1" style="border-radius: 20px" data-toggle="tooltip"
+                               data-placement="top" title="Add product">
                                 <i class="fas fa-plus"></i>
                             </a>
                         </div>
@@ -150,7 +151,7 @@ if (isset($_GET['delID'])){
                             foreach ($product as $prod){
                                 echo '<tr>'.
                                      '<th scope="row">'.$prod['id'].'</th>'.
-                                     '<td><a href="#" id="prodinfo">'.$prod['name'].'</a></td>'.
+                                     '<td><a href="view_prod.php?id='.$prod['id'].'" id="prodinfo">'.$prod['name'].'</a></td>'.
                                      '<td>₱ '.$prod['price'].'</td>'.
                                      '<td class="pl-5">'.$prod['qty'].'</td>';
 
@@ -161,7 +162,8 @@ if (isset($_GET['delID'])){
                                 }
 
                                 echo '<td style="text-align: center">
-                                       <a href="view_prod.php?id='.$prod['id'].'" id="viewInfo">
+                                       <a href="view_prod.php?id='.$prod['id'].'" id="viewInfo" data-toggle="tooltip" 
+                                    data-placement="top" title="View more">
                                             <i class="fas fa-plus-circle" style="font-size: 25px;"></i>
                                         </a>                    
                                      </td>';

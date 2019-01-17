@@ -1,4 +1,6 @@
-<?php include "header.php";
+<?php
+include "header.php";
+include "includes/db.php";
 session_start();
 $loggedIn = true;
 if (!$_SESSION){
@@ -7,7 +9,13 @@ if (!$_SESSION){
     if($_SESSION['type'] == '1'){
         header('location: admin/dashboard.php');
     }
+}
 
+$sql = "SELECT * FROM categorie";
+$category = array();
+$query = mysqli_query($conn,$sql);
+while($row = mysqli_fetch_array($query)){
+    $category[] = '<a class="dropdown-item txtColor" href="#">'.$row['name'].'</a>';
 }
 ?>
 
@@ -43,11 +51,11 @@ if (!$_SESSION){
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="">
                 <h4 class="dropdown-header"><strong>Shop by categories</strong></h4>
-                <a class="dropdown-item txtColor" href="#">T-Shirt</a>
-                <a class="dropdown-item txtColor" href="#">Shorts</a>
-                <a class="dropdown-item txtColor" href="#">Pants</a>
-                <a class="dropdown-item txtColor" href="#">Shoes</a>
-                <a class="dropdown-item txtColor" href="#">Jackets</a>
+                <?php
+                    foreach($category as $cat){
+                        echo $cat;
+                    }
+                ?>
                 <h4 class="dropdown-header"><strong>Shop by gender</strong></h4>
                 <a class="dropdown-item txtColor" href="#">Men's</a>
                 <a class="dropdown-item txtColor" href="#">Women's</a>
@@ -139,7 +147,7 @@ if (!$_SESSION){
                         <div class="card-body txtColor" style="padding-top: 100px;">
                             <h3 style="text-align: center">Brown Glasses</h3>
                             <h4 style="text-align: center">₱500.00</h4>
-                            <a href="home.php" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
+                            <a href="http://onlineshop/prod_info.php?id=37" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
                                 View more
                             </a>
                         </div>
@@ -153,7 +161,7 @@ if (!$_SESSION){
                         <div class="card-body txtColor" style="padding-top: 100px;">
                             <h3 style="text-align: center">Men's Shoes</h3>
                             <h4 style="text-align: center">₱2,500.00</h4>
-                            <a href="home.php" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
+                            <a href="http://onlineshop/prod_info.php?id=46" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
                                 View more
                             </a>
                         </div>
@@ -166,8 +174,8 @@ if (!$_SESSION){
                     <div class="card cdEf">
                         <div class="card-body txtColor" style="padding-top: 100px;">
                             <h3 style="text-align: center">Red Snapback</h3>
-                            <h4 style="text-align: center">₱1,250.00</h4>
-                            <a href="home.php" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
+                            <h4 style="text-align: center">₱500.00</h4>
+                            <a href="prod_info.php?id=35" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
                                 View more
                             </a>
                         </div>
@@ -183,7 +191,7 @@ if (!$_SESSION){
                         <div class="card-body txtColor" style="padding-top: 100px;">
                             <h3 style="text-align: center">Black Glass</h3>
                             <h4 style="text-align: center">₱750.00</h4>
-                            <a href="#" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
+                            <a href="http://onlineshop/prod_info.php?id=49" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
                                 View more
                             </a>
                         </div>
@@ -197,7 +205,7 @@ if (!$_SESSION){
                         <div class="card-body txtColor" style="padding-top: 100px;">
                             <h3 style="text-align: center">Women's shoes</h3>
                             <h4 style="text-align: center">₱2,500.00</h4>
-                            <a href="#" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
+                            <a href="http://onlineshop/prod_info.php?id=47" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
                                 View more
                             </a>
                         </div>
@@ -211,7 +219,7 @@ if (!$_SESSION){
                         <div class="card-body txtColor" style="padding-top: 100px;">
                             <h3 style="text-align: center">Pink Backpack</h3>
                             <h4 style="text-align: center">₱1,550.00</h4>
-                            <a href="#" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
+                            <a href="http://onlineshop/prod_info.php?id=50" class="btn btn-outline-primary" style="width: 142px; margin-left: 4rem;">
                                 View more
                             </a>
                         </div>
@@ -219,7 +227,7 @@ if (!$_SESSION){
                 </div>
             </div>
         </div>
-        <a href="#" class="btn btn-dark" style="margin: 30px 0 10px 31rem;">View more</a>
+        <a href="home.php" class="btn btn-dark" style="margin: 30px 0 10px 31rem;">View more</a>
         <hr id="menAndWomen" style="border: 0;">
     </div>
 </section>
@@ -263,9 +271,9 @@ if (!$_SESSION){
                     <div class="card-body">
                         <h6 class="card-title">Bomber Jacket</h6>
                         <p class="card-text">
-                            ₱1,099.00
+                            ₱1,100.00
                         </p>
-                        <a href="#" class="btn btn-dark">View more</a>
+                        <a href="http://onlineshop/prod_info.php?id=40" class="btn btn-dark">View more</a>
                     </div>
                 </div>
             </div>
@@ -277,7 +285,7 @@ if (!$_SESSION){
                         <p class="card-text">
                             ₱899.00
                         </p>
-                        <a href="#" class="btn btn-dark">View more</a>
+                        <a href="http://onlineshop/prod_info.php?id=51" class="btn btn-dark">View more</a>
                     </div>
                 </div>
             </div>
@@ -289,7 +297,7 @@ if (!$_SESSION){
                         <p class="card-text">
                             ₱399.00
                         </p>
-                        <a href="#" class="btn btn-dark">View more</a>
+                        <a href="http://onlineshop/prod_info.php?id=52" class="btn btn-dark">View more</a>
                     </div>
                 </div>
             </div>
@@ -301,7 +309,7 @@ if (!$_SESSION){
                         <p class="card-text">
                             ₱699.00
                         </p>
-                        <a href="#" class="btn btn-dark">View more</a>
+                        <a href="http://onlineshop/prod_info.php?id=38" class="btn btn-dark">View more</a>
                     </div>
                 </div>
             </div>

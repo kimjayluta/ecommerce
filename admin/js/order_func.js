@@ -63,13 +63,27 @@ $(document).ready(function () {
             }
         })
     });
-
+    // Cancel function
     $('#orderTable').on('click','.cancBtn', function () {
         const order_id = $(this).parents('tr').find('.order_id').data('id');
         $.ajax({
             url: 'includes/orderpage_func.php',
             method: 'post',
             data:{cancel:1,order_id:order_id},
+            success: function (data) {
+                getPendingOrder();
+                $('#msg').html(data);
+            }
+        })
+    })
+
+    // Pending btn function
+    $('#orderTable').on('click','.pendBtn', function () {
+        const order_id = $(this).parents('tr').find('.order_id').data('id');
+        $.ajax({
+            url: 'includes/orderpage_func.php',
+            method: 'post',
+            data:{pending:1,order_id:order_id},
             success: function (data) {
                 getPendingOrder();
                 $('#msg').html(data);

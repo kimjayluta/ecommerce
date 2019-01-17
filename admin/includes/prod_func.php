@@ -3,6 +3,7 @@ include_once "../../includes/db.php";
 @$id = $_GET['id'];
 // Add product
 if (isset($_POST['btn-add']) && $id == ''){
+
     $prod_name = $_POST['prod_name'];
     $prod_price = $_POST['prod_price'];
     $prod_qty = $_POST['prod_qty'];
@@ -26,12 +27,15 @@ if (isset($_POST['btn-add']) && $id == ''){
                 //move file to image directory
                 move_uploaded_file($_FILES['prod_img']['tmp_name'], $target);
                 header('location: ../add_prod.php?success');
+            } else {
+                echo $sql;
             }
         }
     }
 }
 // Edit product data
 if (isset($_POST['btn-add'],$_GET['id']) && $id !== ''){
+
     $new_name = $_POST['prod_name'];
     $new_price = $_POST['prod_price'];
     $new_qty = $_POST['prod_qty'];

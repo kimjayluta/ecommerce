@@ -31,12 +31,14 @@ if ($sql !== ''){
                         '<div class="card-body txtColor" style="padding-left: 0;padding-right: 0;">'.
                             '<div class="row">'.
                                 '<div class="col p-0" >'.
-                                    '<a href="../prod_info.php?id='.$row['id'].'" class="btn viewBtn " style="float: right">'.
+                                    '<a href="../prod_info.php?id='.$row['id'].'" class="btn viewBtn " style="float: right" data-toggle="tooltip" 
+                                    data-placement="top" title="View more">'.
                                         '<i class="fas fa-search-plus fa-2x txtColor txt" style="font-size: 40px"></i>'.
                                     '</a>'.
                                 '</div>'.
                                 '<div class="col p-0">'.
-                                    '<a href="javascript:void(0)" data-id="'.$row['id'].'" class="btn viewBtn pBtn" style="float: left">'.
+                                    '<a href="javascript:void(0)" data-id="'.$row['id'].'" class="btn viewBtn pBtn" style="float: left" data-toggle="tooltip" 
+                                    data-placement="top" title="Add to cart">'.
                                         '<i class="fas fa-cart-plus txtColor txt" style="font-size: 40px"></i>'.
                                     '</a>'.
                                 '</div>'.
